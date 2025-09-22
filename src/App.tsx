@@ -66,7 +66,7 @@ function LandingPage({ isDark, toggleTheme, setUser }: LandingPageProps) {
   const [isLogin, setIsLogin] = useState(true);
 
   return (
-    <div className={`min-h-screen transition-colors duration-300 ${isDark ? 'dark bg-gray-900' : 'bg-gradient-to-br from-blue-50 via-white to-purple-50'}`}>
+    <div className={`min-h-screen transition-colors duration-300 ${isDark ? 'dark bg-black' : 'bg-white'}`}>
       {/* Glassmorphism Navigation */}
       <nav className="sticky top-0 z-50 backdrop-blur-lg bg-white/70 dark:bg-gray-900/70 border-b border-white/20 dark:border-gray-700/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
