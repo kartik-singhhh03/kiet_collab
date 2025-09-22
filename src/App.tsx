@@ -607,10 +607,10 @@ interface StatCardProps {
 
 function StatCard({ title, value, icon, color, isDark }: StatCardProps) {
   const colorClasses = {
-    blue: 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20',
-    green: 'text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20',
-    purple: 'text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-900/20',
-    orange: 'text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-900/20'
+    blue: 'text-yellow-600 dark:text-yellow-400 bg-yellow-50 dark:bg-yellow-900/10',
+    green: 'text-yellow-600 dark:text-yellow-400 bg-yellow-50 dark:bg-yellow-900/10',
+    purple: 'text-yellow-600 dark:text-yellow-400 bg-yellow-50 dark:bg-yellow-900/10',
+    orange: 'text-yellow-600 dark:text-yellow-400 bg-yellow-50 dark:bg-yellow-900/10'
   };
 
   return (
