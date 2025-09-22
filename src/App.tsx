@@ -83,7 +83,7 @@ function LandingPage({ isDark, toggleTheme, setUser }: LandingPageProps) {
             <div className="flex items-center space-x-4">
               <button
                 onClick={toggleTheme}
-                className="p-2 rounded-lg bg-white/20 dark:bg-gray-800/20 backdrop-blur-sm border border-white/30 dark:border-gray-700/30 hover:bg-white/30 dark:hover:bg-gray-800/30 transition-all duration-200"
+                className="p-2 rounded-lg bg-transparent border border-gray-200 dark:border-gray-800 hover:bg-black/5 dark:hover:bg-white/5 transition-all duration-200 shadow-[0_0_12px_rgba(234,179,8,0.25)]"
               >
                 {isDark ? <Sun className="h-5 w-5 text-yellow-500" /> : <Moon className="h-5 w-5 text-gray-600" />}
               </button>
@@ -479,7 +479,7 @@ function Dashboard({ user, isDark, toggleTheme }: DashboardProps) {
               
               <button
                 onClick={toggleTheme}
-                className="p-2 rounded-lg bg-white/20 dark:bg-gray-800/20 backdrop-blur-sm border border-white/30 dark:border-gray-700/30 hover:bg-white/30 dark:hover:bg-gray-800/30 transition-all duration-200"
+                className="p-2 rounded-lg bg-transparent border border-gray-200 dark:border-gray-800 hover:bg-black/5 dark:hover:bg-white/5 transition-all duration-200 shadow-[0_0_12px_rgba(234,179,8,0.25)]"
               >
                 {isDark ? <Sun className="h-5 w-5 text-yellow-500" /> : <Moon className="h-5 w-5 text-gray-600" />}
               </button>
