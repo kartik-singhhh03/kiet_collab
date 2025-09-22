@@ -85,7 +85,7 @@ function LandingPage({ isDark, toggleTheme, setUser }: LandingPageProps) {
                 onClick={toggleTheme}
                 className="p-2 rounded-lg bg-transparent border border-gray-200 dark:border-gray-800 hover:bg-black/5 dark:hover:bg-white/5 transition-all duration-200 shadow-[0_0_12px_rgba(234,179,8,0.25)]"
               >
-                {isDark ? <Sun className="h-5 w-5 text-yellow-500" /> : <Moon className="h-5 w-5 text-gray-600" />}
+                {isDark ? <Sun className="h-5 w-5 text-gray-500" /> : <Moon className="h-5 w-5 text-gray-600" />}
               </button>
               
               <button
@@ -481,7 +481,7 @@ function Dashboard({ user, isDark, toggleTheme }: DashboardProps) {
                 onClick={toggleTheme}
                 className="p-2 rounded-lg bg-transparent border border-gray-200 dark:border-gray-800 hover:bg-black/5 dark:hover:bg-white/5 transition-all duration-200 shadow-[0_0_12px_rgba(234,179,8,0.25)]"
               >
-                {isDark ? <Sun className="h-5 w-5 text-yellow-500" /> : <Moon className="h-5 w-5 text-gray-600" />}
+                {isDark ? <Sun className="h-5 w-5 text-gray-500" /> : <Moon className="h-5 w-5 text-gray-600" />}
               </button>
 
               <div className="flex items-center space-x-3">
