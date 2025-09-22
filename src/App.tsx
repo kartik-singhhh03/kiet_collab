@@ -73,7 +73,7 @@ function LandingPage({ isDark, toggleTheme, setUser }: LandingPageProps) {
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center space-x-3">
               <div className="h-10 w-10 rounded-xl bg-black dark:bg-white flex items-center justify-center shadow-[0_0_20px_rgba(234,179,8,0.35)]">
-                <Code className="h-6 w-6 text-yellow-500" />
+                <Code className="h-6 w-6 text-gray-900 dark:text-gray-100" />
               </div>
               <span className="text-xl font-bold text-black dark:text-white">
                 KIET Collab
@@ -464,7 +464,7 @@ function Dashboard({ user, isDark, toggleTheme }: DashboardProps) {
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center space-x-3">
               <div className="h-10 w-10 rounded-xl bg-black dark:bg-white flex items-center justify-center shadow-[0_0_20px_rgba(234,179,8,0.35)]">
-                <Code className="h-6 w-6 text-yellow-500" />
+                <Code className="h-6 w-6 text-gray-900 dark:text-gray-100" />
               </div>
               <span className="text-xl font-bold text-black dark:text-white">
                 KIET Collab
