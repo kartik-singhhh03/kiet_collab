@@ -637,7 +637,7 @@ interface ComingSoonCardProps {
 
 function ComingSoonCard({ title, description, icon, isDark }: ComingSoonCardProps) {
   return (
-    <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-2xl p-6 border border-white/20 dark:border-gray-700/20 hover:bg-white/80 dark:hover:bg-gray-800/80 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl group">
+    <div className="bg-white dark:bg-black rounded-2xl p-6 border border-gray-200 dark:border-gray-800 transition-all duration-300 hover:-translate-y-1 shadow-[0_0_16px_rgba(234,179,8,0.15)] hover:shadow-[0_0_28px_rgba(234,179,8,0.28)] group">
       <div className="flex items-start justify-between mb-4">
         <div className="text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform duration-200">
           {icon}
