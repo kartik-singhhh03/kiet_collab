@@ -614,7 +614,7 @@ function StatCard({ title, value, icon, color, isDark }: StatCardProps) {
   };
 
   return (
-    <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-2xl p-6 border border-white/20 dark:border-gray-700/20">
+    <div className="bg-white dark:bg-black rounded-2xl p-6 border border-gray-200 dark:border-gray-800 shadow-[0_0_12px_rgba(234,179,8,0.12)]">
       <div className="flex items-center justify-between">
         <div>
           <p className="text-sm font-medium text-gray-600 dark:text-gray-300">{title}</p>
