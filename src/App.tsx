@@ -103,7 +103,7 @@ function LandingPage({ isDark, toggleTheme, setUser }: LandingPageProps) {
       <div className="relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16">
           <div className="text-center">
-            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
+            <h1 className="text-5xl md:text-6xl font-bold text-black dark:text-white mb-6">
               Connect. Create.{' '}
               <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                 Collaborate.
