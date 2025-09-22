@@ -227,7 +227,7 @@ interface FeatureCardProps {
 
 function FeatureCard({ icon, title, description, isDark }: FeatureCardProps) {
   return (
-    <div className="group p-6 rounded-2xl bg-white dark:bg-black border border-gray-200 dark:border-gray-800 transition-all duration-300 hover:-translate-y-1 shadow-[0_0_20px_rgba(234,179,8,0.15)] hover:shadow-[0_0_28px_rgba(234,179,8,0.28)]">
+    <div className="group p-6 rounded-2xl bg-white dark:bg-black border border-gray-200 dark:border-gray-800 transition-all duration-300 hover:-translate-y-1 shadow-[0_0_20px_rgba(234,179,8,0.15)] hover:shadow-none">
       <div className="text-yellow-600 dark:text-yellow-400 mb-4 group-hover:scale-110 transition-transform duration-200">
         {icon}
       </div>
@@ -637,7 +637,7 @@ interface ComingSoonCardProps {
 
 function ComingSoonCard({ title, description, icon, isDark }: ComingSoonCardProps) {
   return (
-    <div className="bg-white dark:bg-black rounded-2xl p-6 border border-gray-200 dark:border-gray-800 transition-all duration-300 hover:-translate-y-1 shadow-[0_0_16px_rgba(234,179,8,0.15)] hover:shadow-[0_0_28px_rgba(234,179,8,0.28)] group">
+    <div className="bg-white dark:bg-black rounded-2xl p-6 border border-gray-200 dark:border-gray-800 transition-all duration-300 hover:-translate-y-1 shadow-[0_0_16px_rgba(234,179,8,0.15)] hover:shadow-none group">
       <div className="flex items-start justify-between mb-4">
         <div className="text-yellow-600 dark:text-yellow-400 group-hover:scale-110 transition-transform duration-200">
           {icon}
