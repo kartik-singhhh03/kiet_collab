@@ -90,7 +90,7 @@ function LandingPage({ isDark, toggleTheme, setUser }: LandingPageProps) {
               
               <button
                 onClick={() => setShowAuth(true)}
-                className="px-6 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl"
+                className="px-6 py-2 bg-black text-white dark:bg-white dark:text-black rounded-lg hover:opacity-90 transition-all duration-200 shadow-[0_0_20px_rgba(234,179,8,0.35)]"
               >
                 Get Started
               </button>
