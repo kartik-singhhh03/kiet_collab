@@ -105,7 +105,7 @@ function LandingPage({ isDark, toggleTheme, setUser }: LandingPageProps) {
           <div className="text-center">
             <h1 className="text-5xl md:text-6xl font-bold text-black dark:text-white mb-6">
               Connect. Create.{' '}
-              <span className="text-yellow-500 drop-shadow-[0_0_12px_rgba(234,179,8,0.45)]">
+              <span className="text-gray-900 dark:text-gray-100">
                 Collaborate.
               </span>
             </h1>
