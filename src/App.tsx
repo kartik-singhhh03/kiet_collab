@@ -328,7 +328,7 @@ function AuthModal({ isLogin, setIsLogin, onClose, onSuccess, isDark }: AuthModa
                 value={formData.email}
                 onChange={handleInputChange}
                 placeholder="yourname@kiet.edu"
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200"
+                className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100 focus:border-transparent transition-all duration-200"
               />
             </div>
 
@@ -343,7 +343,7 @@ function AuthModal({ isLogin, setIsLogin, onClose, onSuccess, isDark }: AuthModa
                 value={formData.password}
                 onChange={handleInputChange}
                 placeholder="Enter your password"
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200"
+                className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100 focus:border-transparent transition-all duration-200"
               />
             </div>
 
@@ -360,7 +360,7 @@ function AuthModal({ isLogin, setIsLogin, onClose, onSuccess, isDark }: AuthModa
                     value={formData.name}
                     onChange={handleInputChange}
                     placeholder="Enter your full name"
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100 focus:border-transparent transition-all duration-200"
                   />
                 </div>
 
@@ -373,7 +373,7 @@ function AuthModal({ isLogin, setIsLogin, onClose, onSuccess, isDark }: AuthModa
                       name="year"
                       value={formData.year}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200"
+                      className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100 focus:border-transparent transition-all duration-200"
                     >
                       <option value="">Select Year</option>
                       <option value="1">1st Year</option>
@@ -391,7 +391,7 @@ function AuthModal({ isLogin, setIsLogin, onClose, onSuccess, isDark }: AuthModa
                       name="branch"
                       value={formData.branch}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200"
+                      className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100 focus:border-transparent transition-all duration-200"
                     >
                       <option value="">Select Branch</option>
                       <option value="CSE">CSE</option>
