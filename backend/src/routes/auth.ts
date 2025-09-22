@@ -6,6 +6,9 @@ import { authRateLimiter } from '../middleware/rateLimiter';
 
 const router = Router();
 
+const JWT_SECRET = process.env.JWT_SECRET || 'dev_jwt_secret_change_me';
+const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || 'dev_refresh_secret_change_me';
+
 /**
  * @swagger
  * /api/auth/register:
@@ -88,13 +91,13 @@ router.post('/register', authRateLimiter, async (req, res) => {
     // Generate tokens
     const accessToken = jwt.sign(
       { userId: user._id },
-      process.env.JWT_SECRET!,
+      JWT_SECRET,
       { expiresIn: '15m' }
     );
 
     const refreshToken = jwt.sign(
       { userId: user._id },
-      process.env.JWT_REFRESH_SECRET!,
+      JWT_REFRESH_SECRET,
       { expiresIn: '7d' }
     );
 
@@ -171,13 +174,13 @@ router.post('/login', authRateLimiter, async (req, res) => {
     // Generate tokens
     const accessToken = jwt.sign(
       { userId: user._id },
-      process.env.JWT_SECRET!,
+      JWT_SECRET,
       { expiresIn: '15m' }
     );
 
     const refreshToken = jwt.sign(
       { userId: user._id },
-      process.env.JWT_REFRESH_SECRET!,
+      JWT_REFRESH_SECRET,
       { expiresIn: '7d' }
     );
 
@@ -228,7 +231,7 @@ router.post('/refresh', async (req, res) => {
       return res.status(401).json({ error: 'Refresh token required' });
     }
 
-    const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET!) as { userId: string };
+    const decoded = jwt.verify(refreshToken, JWT_REFRESH_SECRET) as { userId: string };
     const user = await User.findById(decoded.userId);
 
     if (!user) {
@@ -237,7 +240,7 @@ router.post('/refresh', async (req, res) => {
 
     const accessToken = jwt.sign(
       { userId: user._id },
-      process.env.JWT_SECRET!,
+      JWT_SECRET,
       { expiresIn: '15m' }
     );
 
