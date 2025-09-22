@@ -228,7 +228,7 @@ interface FeatureCardProps {
 function FeatureCard({ icon, title, description, isDark }: FeatureCardProps) {
   return (
     <div className="group p-6 rounded-2xl bg-white dark:bg-black border border-gray-200 dark:border-gray-800 transition-all duration-300 hover:-translate-y-1 shadow-[0_0_20px_rgba(234,179,8,0.15)] hover:shadow-none">
-      <div className="text-yellow-600 dark:text-yellow-400 mb-4 group-hover:scale-110 transition-transform duration-200">
+      <div className="text-gray-700 dark:text-gray-300 mb-4 group-hover:scale-110 transition-transform duration-200">
         {icon}
       </div>
       <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">{title}</h3>
@@ -428,7 +428,7 @@ function AuthModal({ isLogin, setIsLogin, onClose, onSuccess, isDark }: AuthModa
               {isLogin ? "Don't have an account?" : "Already have an account?"}{' '}
               <button
                 onClick={() => setIsLogin(!isLogin)}
-                className="text-yellow-600 dark:text-yellow-400 hover:underline font-medium"
+                className="text-gray-700 dark:text-gray-300 hover:underline font-medium"
               >
                 {isLogin ? 'Sign up' : 'Sign in'}
               </button>
@@ -607,10 +607,10 @@ interface StatCardProps {
 
 function StatCard({ title, value, icon, color, isDark }: StatCardProps) {
   const colorClasses = {
-    blue: 'text-yellow-600 dark:text-yellow-400 bg-yellow-50 dark:bg-yellow-900/10',
-    green: 'text-yellow-600 dark:text-yellow-400 bg-yellow-50 dark:bg-yellow-900/10',
-    purple: 'text-yellow-600 dark:text-yellow-400 bg-yellow-50 dark:bg-yellow-900/10',
-    orange: 'text-yellow-600 dark:text-yellow-400 bg-yellow-50 dark:bg-yellow-900/10'
+    blue: 'text-gray-700 dark:text-gray-300 bg-yellow-50 dark:bg-yellow-900/10',
+    green: 'text-gray-700 dark:text-gray-300 bg-yellow-50 dark:bg-yellow-900/10',
+    purple: 'text-gray-700 dark:text-gray-300 bg-yellow-50 dark:bg-yellow-900/10',
+    orange: 'text-gray-700 dark:text-gray-300 bg-yellow-50 dark:bg-yellow-900/10'
   };
 
   return (
@@ -639,10 +639,10 @@ function ComingSoonCard({ title, description, icon, isDark }: ComingSoonCardProp
   return (
     <div className="bg-white dark:bg-black rounded-2xl p-6 border border-gray-200 dark:border-gray-800 transition-all duration-300 hover:-translate-y-1 shadow-[0_0_16px_rgba(234,179,8,0.15)] hover:shadow-none group">
       <div className="flex items-start justify-between mb-4">
-        <div className="text-yellow-600 dark:text-yellow-400 group-hover:scale-110 transition-transform duration-200">
+        <div className="text-gray-700 dark:text-gray-300 group-hover:scale-110 transition-transform duration-200">
           {icon}
         </div>
-        <span className="px-3 py-1 border border-yellow-500/40 text-yellow-600 dark:text-yellow-400 text-xs font-medium rounded-full">
+        <span className="px-3 py-1 border border-yellow-500/40 text-gray-700 dark:text-gray-300 text-xs font-medium rounded-full">
           Coming Soon
         </span>
       </div>
