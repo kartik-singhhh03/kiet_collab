@@ -228,7 +228,7 @@ interface FeatureCardProps {
 function FeatureCard({ icon, title, description, isDark }: FeatureCardProps) {
   return (
     <div className="group p-6 rounded-2xl bg-white dark:bg-black border border-gray-200 dark:border-gray-800 transition-all duration-300 hover:-translate-y-1 shadow-[0_0_20px_rgba(234,179,8,0.15)] hover:shadow-[0_0_28px_rgba(234,179,8,0.28)]">
-      <div className="text-blue-600 dark:text-blue-400 mb-4 group-hover:scale-110 transition-transform duration-200">
+      <div className="text-yellow-600 dark:text-yellow-400 mb-4 group-hover:scale-110 transition-transform duration-200">
         {icon}
       </div>
       <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">{title}</h3>
