@@ -474,7 +474,7 @@ function Dashboard({ user, isDark, toggleTheme }: DashboardProps) {
             <div className="flex items-center space-x-4">
               <button className="p-2 rounded-lg bg-transparent border border-gray-200 dark:border-gray-800 hover:bg-black/5 dark:hover:bg-white/5 transition-all duration-200 relative shadow-[0_0_12px_rgba(234,179,8,0.25)]">
                 <Bell className="h-5 w-5 text-gray-600 dark:text-gray-300" />
-                <span className="absolute -top-1 -right-1 h-3 w-3 bg-yellow-500 rounded-full shadow-[0_0_8px_rgba(234,179,8,0.8)]"></span>
+                <span className="absolute -top-1 -right-1 h-3 w-3 bg-gray-500 rounded-full"></span>
               </button>
               
               <button
