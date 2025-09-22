@@ -485,7 +485,7 @@ function Dashboard({ user, isDark, toggleTheme }: DashboardProps) {
               </button>
 
               <div className="flex items-center space-x-3">
-                <div className="h-8 w-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                <div className="h-8 w-8 rounded-full bg-black dark:bg-white flex items-center justify-center shadow-[0_0_12px_rgba(234,179,8,0.25)]">
                   <span className="text-white text-sm font-medium">
                     {user.name.charAt(0).toUpperCase()}
                   </span>
