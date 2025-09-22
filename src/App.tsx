@@ -119,7 +119,7 @@ function LandingPage({ isDark, toggleTheme, setUser }: LandingPageProps) {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
               <button
                 onClick={() => setShowAuth(true)}
-                className="px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl hover:from-blue-600 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl text-lg font-medium"
+                className="px-8 py-4 bg-black text-white dark:bg-white dark:text-black rounded-xl hover:opacity-90 transition-all duration-200 shadow-[0_0_20px_rgba(234,179,8,0.35)] text-lg font-medium"
               >
                 Join KIET Collab
               </button>
