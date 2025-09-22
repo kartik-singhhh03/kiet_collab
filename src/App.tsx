@@ -123,7 +123,7 @@ function LandingPage({ isDark, toggleTheme, setUser }: LandingPageProps) {
               >
                 Join KIET Collab
               </button>
-              <button className="px-8 py-4 border-2 border-yellow-500 text-yellow-600 dark:text-yellow-400 rounded-xl hover:bg-yellow-50 dark:hover:bg-yellow-900/10 transition-all duration-200 text-lg font-medium">
+              <button className="px-8 py-4 border border-gray-900 text-gray-900 dark:border-gray-100 dark:text-gray-100 rounded-xl hover:bg-gray-50 dark:hover:bg-white/10 transition-all duration-200 text-lg font-medium">
                 Learn More
               </button>
             </div>
