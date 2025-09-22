@@ -139,7 +139,7 @@ function LandingPage({ isDark, toggleTheme, setUser }: LandingPageProps) {
                 <div className="text-gray-600 dark:text-gray-300">Projects</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-green-600 dark:text-green-400">50+</div>
+                <div className="text-3xl font-semibold text-gray-900 dark:text-gray-100">50+</div>
                 <div className="text-gray-600 dark:text-gray-300">Events</div>
               </div>
               <div className="text-center">
