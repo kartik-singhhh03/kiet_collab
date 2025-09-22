@@ -1,30 +1,32 @@
 import { Router } from 'express';
-import { authenticateToken, AuthRequest, requireRole } from '../middleware/auth';
+import { authenticateToken, AuthRequest } from '../middleware/auth';
+import Project from '../models/Project';
 
 const router = Router();
 
-/**
- * @swagger
- * /api/projects:
- *   get:
- *     summary: Get all projects
- *     tags: [Projects]
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       200:
- *         description: List of projects
- */
+// List projects
 router.get('/', authenticateToken, async (req: AuthRequest, res) => {
   try {
-    // Placeholder implementation
-    res.json({ 
-      message: 'Projects endpoint - Coming Soon!',
-      projects: []
-    });
+    const { q, event } = req.query as any;
+    const query: any = {};
+    if (q) query.$text = { $search: q };
+    if (event) query.event = event;
+
+    const projects = await Project.find(query).sort({ createdAt: -1 });
+    res.json({ projects });
   } catch (error) {
-    console.error('Get projects error:', error);
     res.status(500).json({ error: 'Failed to get projects' });
+  }
+});
+
+// Get project
+router.get('/:id', authenticateToken, async (req: AuthRequest, res) => {
+  try {
+    const project = await Project.findById(req.params.id);
+    if (!project) return res.status(404).json({ error: 'Project not found' });
+    res.json({ project });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to get project' });
   }
 });
 

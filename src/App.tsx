@@ -446,6 +446,8 @@ interface DashboardProps {
   toggleTheme: () => void;
 }
 
+import AdminDashboard from './components/AdminDashboard';
+
 function Dashboard({ user, isDark, toggleTheme }: DashboardProps) {
   const handleLogout = () => {
     localStorage.removeItem('accessToken');
@@ -547,7 +549,11 @@ function Dashboard({ user, isDark, toggleTheme }: DashboardProps) {
           />
         </div>
 
-        {/* Coming Soon Cards */}
+        {user.role === 'admin' && (
+          <AdminDashboard />
+        )}
+
+        {/* Modules */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           <ComingSoonCard
             title="Project Showcase"
