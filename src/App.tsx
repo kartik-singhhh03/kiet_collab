@@ -90,7 +90,7 @@ function LandingPage({ isDark, toggleTheme, setUser }: LandingPageProps) {
               
               <button
                 onClick={() => setShowAuth(true)}
-                className="px-6 py-2 bg-black text-white dark:bg-white dark:text-black rounded-lg hover:opacity-90 transition-all duration-200 shadow-[0_0_20px_rgba(234,179,8,0.35)]"
+                className="px-6 py-2 bg-black text-white dark:bg-white dark:text-black rounded-lg hover:opacity-90 transition-all duration-200 shadow-none"
               >
                 Get Started
               </button>
@@ -119,7 +119,7 @@ function LandingPage({ isDark, toggleTheme, setUser }: LandingPageProps) {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
               <button
                 onClick={() => setShowAuth(true)}
-                className="px-8 py-4 bg-black text-white dark:bg-white dark:text-black rounded-xl hover:opacity-90 transition-all duration-200 shadow-[0_0_20px_rgba(234,179,8,0.35)] text-lg font-medium"
+                className="px-8 py-4 bg-black text-white dark:bg-white dark:text-black rounded-xl hover:opacity-90 transition-all duration-200 shadow-none text-lg font-medium"
               >
                 Join KIET Collab
               </button>
@@ -417,7 +417,7 @@ function AuthModal({ isLogin, setIsLogin, onClose, onSuccess, isDark }: AuthModa
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-3 px-4 bg-black text-white dark:bg-white dark:text-black rounded-lg hover:opacity-90 transition-all duration-200 shadow-[0_0_20px_rgba(234,179,8,0.35)] disabled:opacity-50 disabled:cursor-not-allowed font-medium"
+              className="w-full py-3 px-4 bg-black text-white dark:bg-white dark:text-black rounded-lg hover:opacity-90 transition-all duration-200 shadow-none disabled:opacity-50 disabled:cursor-not-allowed font-medium"
             >
               {isLoading ? 'Please wait...' : (isLogin ? 'Sign In' : 'Create Account')}
             </button>
