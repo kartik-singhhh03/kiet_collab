@@ -227,7 +227,7 @@ interface FeatureCardProps {
 
 function FeatureCard({ icon, title, description, isDark }: FeatureCardProps) {
   return (
-    <div className="group p-6 rounded-2xl bg-white dark:bg-black border border-gray-200 dark:border-gray-800 transition-all duration-300 hover:-translate-y-1 shadow-[0_0_20px_rgba(234,179,8,0.15)] hover:shadow-none">
+    <div className="group p-6 rounded-2xl bg-white dark:bg-black border border-gray-200 dark:border-gray-800 transition-all duration-300 hover:-translate-y-1 shadow-none hover:shadow-none">
       <div className="text-gray-700 dark:text-gray-300 mb-4 group-hover:scale-110 transition-transform duration-200">
         {icon}
       </div>
@@ -607,14 +607,14 @@ interface StatCardProps {
 
 function StatCard({ title, value, icon, color, isDark }: StatCardProps) {
   const colorClasses = {
-    blue: 'text-gray-700 dark:text-gray-300 bg-yellow-50 dark:bg-yellow-900/10',
-    green: 'text-gray-700 dark:text-gray-300 bg-yellow-50 dark:bg-yellow-900/10',
-    purple: 'text-gray-700 dark:text-gray-300 bg-yellow-50 dark:bg-yellow-900/10',
-    orange: 'text-gray-700 dark:text-gray-300 bg-yellow-50 dark:bg-yellow-900/10'
+    blue: 'text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-900/40',
+    green: 'text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-900/40',
+    purple: 'text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-900/40',
+    orange: 'text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-900/40'
   };
 
   return (
-    <div className="bg-white dark:bg-black rounded-2xl p-6 border border-gray-200 dark:border-gray-800 shadow-[0_0_12px_rgba(234,179,8,0.12)]">
+    <div className="bg-white dark:bg-black rounded-2xl p-6 border border-gray-200 dark:border-gray-800 shadow-none">
       <div className="flex items-center justify-between">
         <div>
           <p className="text-sm font-medium text-gray-600 dark:text-gray-300">{title}</p>
@@ -637,12 +637,12 @@ interface ComingSoonCardProps {
 
 function ComingSoonCard({ title, description, icon, isDark }: ComingSoonCardProps) {
   return (
-    <div className="bg-white dark:bg-black rounded-2xl p-6 border border-gray-200 dark:border-gray-800 transition-all duration-300 hover:-translate-y-1 shadow-[0_0_16px_rgba(234,179,8,0.15)] hover:shadow-none group">
+    <div className="bg-white dark:bg-black rounded-2xl p-6 border border-gray-200 dark:border-gray-800 transition-all duration-300 hover:-translate-y-1 shadow-none hover:shadow-none group">
       <div className="flex items-start justify-between mb-4">
         <div className="text-gray-700 dark:text-gray-300 group-hover:scale-110 transition-transform duration-200">
           {icon}
         </div>
-        <span className="px-3 py-1 border border-yellow-500/40 text-gray-700 dark:text-gray-300 text-xs font-medium rounded-full">
+        <span className="px-3 py-1 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 text-xs font-medium rounded-full">
           Coming Soon
         </span>
       </div>
