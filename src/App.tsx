@@ -49,6 +49,9 @@ function App() {
   }
 
   if (user) {
+    if (typeof window !== 'undefined' && window.location.pathname === '/discover') {
+      return <StudentDiscovery isDark={isDark} toggleTheme={toggleTheme} user={user} />;
+    }
     return <Dashboard user={user} isDark={isDark} toggleTheme={toggleTheme} />;
   }
 
@@ -449,6 +452,7 @@ interface DashboardProps {
 }
 
 import AdminDashboard from './components/AdminDashboard';
+import StudentDiscovery from './pages/StudentDiscovery';
 
 function Dashboard({ user, isDark, toggleTheme }: DashboardProps) {
   const handleLogout = () => {
