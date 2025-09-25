@@ -61,6 +61,8 @@ interface LandingPageProps {
   setUser: (user: User | null) => void;
 }
 
+const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
 function LandingPage({ isDark, toggleTheme, setUser }: LandingPageProps) {
   const [showAuth, setShowAuth] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
@@ -263,7 +265,7 @@ function AuthModal({ isLogin, setIsLogin, onClose, onSuccess, isDark }: AuthModa
 
     try {
       const endpoint = isLogin ? '/api/auth/login' : '/api/auth/register';
-      const response = await fetch(`http://localhost:3000${endpoint}`, {
+      const response = await fetch(`${API}${endpoint}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
