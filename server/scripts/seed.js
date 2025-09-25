@@ -13,14 +13,24 @@ async function run() {
       email: 'aman@kiet.edu',
       password: 'password123',
       availability: 'available',
-      skills: ['react', 'node']
+      skills: ['react', 'node'],
+      role: 'student'
     },
     {
       name: 'Priya Sharma',
       email: 'priya@kiet.edu',
       password: 'password123',
       availability: 'busy',
-      skills: ['ui', 'mongodb']
+      skills: ['ui', 'mongodb'],
+      role: 'student'
+    },
+    {
+      name: 'Admin User',
+      email: 'admin@kiet.edu',
+      password: 'password123',
+      availability: 'available',
+      skills: ['admin'],
+      role: 'admin'
     }
   ];
 
