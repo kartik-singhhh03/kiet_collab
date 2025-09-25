@@ -2,7 +2,13 @@ const { Server } = require('socket.io');
 const jwt = require('jsonwebtoken');
 const User = require('./models/User');
 
-module.exports = function attachSocketIO(httpServer) {
+let ioRef;
+
+function getIO() {
+  return ioRef;
+}
+
+function attachSocketIO(httpServer) {
   const io = new Server(httpServer, {
     cors: {
       origin: process.env.FRONTEND_URL || '*',
@@ -45,5 +51,9 @@ module.exports = function attachSocketIO(httpServer) {
     });
   });
 
+  ioRef = io;
   return io;
-};
+}
+
+module.exports = attachSocketIO;
+module.exports.getIO = getIO;
