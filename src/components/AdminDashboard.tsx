@@ -8,7 +8,8 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     const token = localStorage.getItem('accessToken');
-    fetch('http://localhost:3000/api/admin/metrics', {
+    const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+    fetch(`${API}/api/admin/metrics`, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(async (r) => {
