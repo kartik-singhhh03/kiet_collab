@@ -7,6 +7,8 @@ const jwt = require('jsonwebtoken');
 const User = require('./models/User');
 const authRouter = require('./routes/auth');
 const attachSocketIO = require('./socket');
+const usersRouter = require('./routes/users');
+const invitesRouter = require('./routes/invites');
 
 const app = express();
 app.use(cors({ origin: process.env.FRONTEND_URL || '*', credentials: true }));
@@ -41,6 +43,8 @@ async function auth(req, res, next) {
 
 // Routes
 app.use('/api/auth', authRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/invites', invitesRouter);
 app.get('/api/me', auth, (req, res) => {
   const u = req.user.toObject();
   delete u.password;
