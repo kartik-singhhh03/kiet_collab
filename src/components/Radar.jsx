@@ -14,7 +14,7 @@ function availabilityColor(av) {
   return '#d1d5db'; // offline/default
 }
 
-export default function Radar({ users, presenceMap }) {
+export default function Radar({ users, presenceMap, onInvite }) {
   const ref = useRef(null);
 
   useEffect(() => {
@@ -92,9 +92,37 @@ export default function Radar({ users, presenceMap }) {
     });
   }, [users, presenceMap]);
 
+  const size = 360;
+  // Precompute positions to overlay buttons
+  const positions = users.map((u, idx) => {
+    const id = String(u._id || u.email || idx);
+    const ang = hashToAngle(id);
+    const r = size * 0.45;
+    const dist = r * (0.2 + ((idx % 8) / 8) * 0.75);
+    const cx = size / 2;
+    const cy = size / 2;
+    const x = cx + Math.cos(ang) * dist;
+    const y = cy + Math.sin(ang) * dist;
+    return { id, x, y, user: u };
+  });
+
   return (
     <div className="w-full flex items-center justify-center">
-      <canvas ref={ref} className="border border-gray-200 dark:border-gray-800 rounded-full bg-white dark:bg-black" />
+      <div className="relative" style={{ width: size, height: size }}>
+        <canvas ref={ref} className="absolute inset-0 border border-gray-200 dark:border-gray-800 rounded-full bg-white dark:bg-black" />
+        {positions.map((p) => (
+          <button
+            key={p.id}
+            className="absolute -translate-x-1/2 -translate-y-1/2 text-[10px] px-2 py-0.5 rounded border border-gray-300 dark:border-gray-700 bg-white/80 dark:bg-black/80 hover:bg-gray-50 dark:hover:bg-white/10"
+            style={{ left: p.x + 14, top: p.y - 14 }}
+            onClick={() => onInvite && onInvite(p.user)}
+            title={`Invite ${p.user.name}`}
+            type="button"
+          >
+            Invite
+          </button>
+        ))}
+      </div>
     </div>
   );
 }
