@@ -208,7 +208,7 @@ interface FeatureCardProps {
 
 function FeatureCard({ icon, title, description, isDark }: FeatureCardProps) {
   return (
-    <div className="group p-6 rounded-2xl bg-white dark:bg-black border border-gray-200 dark:border-gray-800 transition-all duration-300 hover:-translate-y-1 shadow-none hover:shadow-none">
+    <div className="group p-6 rounded-2xl bg-white/5 dark:bg-white/5 border border-white/10 transition-all duration-300 hover:-translate-y-1 card-glow">
       <div className="text-gray-700 dark:text-gray-300 mb-4 group-hover:scale-110 transition-transform duration-200">
         {icon}
       </div>
