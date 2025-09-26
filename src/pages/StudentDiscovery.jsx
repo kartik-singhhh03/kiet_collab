@@ -61,55 +61,55 @@ export default function StudentDiscovery({ isDark, toggleTheme, user }) {
   }, []);
 
   return (
-    <div className={`min-h-screen ${isDark ? 'dark bg-black' : 'bg-white'}`}>
-      <nav className="sticky top-0 z-40 backdrop-blur-lg bg-white/80 dark:bg-black/80 border-b border-gray-200 dark:border-gray-800">
+    <div className={`min-h-screen transition-all duration-500 ${isDark ? 'bg-futuristic-dark' : 'bg-futuristic-light'}`}>
+      <nav className="sticky top-0 z-40 nav-glass">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
-          <div className="text-sm text-gray-600 dark:text-gray-300">Student Discovery</div>
-          <button onClick={toggleTheme} className="text-xs px-2 py-1 border border-gray-300 dark:border-gray-700 rounded">Toggle Theme</button>
+          <div className="text-sm text-primary font-medium">Student Discovery</div>
+          <button onClick={toggleTheme} className="text-xs px-2 py-1 card-futuristic rounded">Toggle Theme</button>
         </div>
       </nav>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 grid grid-cols-1 md:grid-cols-4 gap-6">
         {/* Filters */}
         <aside className="md:col-span-1 space-y-4">
-          <div className="border border-gray-200 dark:border-gray-800 rounded-lg p-4 bg-white dark:bg-black">
-            <label className="block text-sm text-gray-700 dark:text-gray-300 mb-1">Skills (comma-separated)</label>
-            <input value={skillsInput} onChange={(e)=>setSkillsInput(e.target.value)} className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded bg-transparent text-gray-900 dark:text-gray-100" placeholder="react,node,ui" />
+          <div className="card-futuristic rounded-lg p-4">
+            <label className="block text-sm text-primary mb-1">Skills (comma-separated)</label>
+            <input value={skillsInput} onChange={(e)=>setSkillsInput(e.target.value)} className="w-full px-3 py-2 input-futuristic rounded" placeholder="react,node,ui" />
           </div>
-          <div className="border border-gray-200 dark:border-gray-800 rounded-lg p-4 bg-white dark:bg黑">
-            <label className="block text-sm text-gray-700 dark:text-gray-300 mb-1">Branch</label>
-            <select value={branch} onChange={(e)=>setBranch(e.target.value)} className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded bg-transparent text-gray-900 dark:text-gray-100">
+          <div className="card-futuristic rounded-lg p-4">
+            <label className="block text-sm text-primary mb-1">Branch</label>
+            <select value={branch} onChange={(e)=>setBranch(e.target.value)} className="w-full px-3 py-2 input-futuristic rounded">
               <option value="">Any</option>
               {BRANCHES.map((b)=> <option key={b} value={b}>{b}</option>)}
             </select>
           </div>
-          <div className="border border-gray-200 dark:border-gray-800 rounded-lg p-4 bg-white dark:bg-black">
-            <label className="block text-sm text-gray-700 dark:text-gray-300 mb-1">Year</label>
-            <select value={year} onChange={(e)=>setYear(e.target.value)} className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded bg-transparent text-gray-900 dark:text-gray-100">
+          <div className="card-futuristic rounded-lg p-4">
+            <label className="block text-sm text-primary mb-1">Year</label>
+            <select value={year} onChange={(e)=>setYear(e.target.value)} className="w-full px-3 py-2 input-futuristic rounded">
               <option value="">Any</option>
               {YEARS.map((y)=> <option key={y} value={y}>{y}</option>)}
             </select>
           </div>
-          <div className="border border-gray-200 dark:border-gray-800 rounded-lg p-4 bg-white dark:bg-black">
-            <label className="block text-sm text-gray-700 dark:text-gray-300 mb-1">Availability</label>
-            <select value={availability} onChange={(e)=>setAvailability(e.target.value)} className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded bg-transparent text-gray-900 dark:text-gray-100">
+          <div className="card-futuristic rounded-lg p-4">
+            <label className="block text-sm text-primary mb-1">Availability</label>
+            <select value={availability} onChange={(e)=>setAvailability(e.target.value)} className="w-full px-3 py-2 input-futuristic rounded">
               <option value="">Any</option>
               <option value="available">Open to Collaborate</option>
               <option value="busy">Busy</option>
               <option value="away">Looking for Team</option>
             </select>
           </div>
-          <button onClick={fetchResults} className="w-full py-2 rounded bg-black text-white dark:bg白 dark:text-black border border-gray-200 dark:border-gray-800">Search</button>
+          <button onClick={fetchResults} className="w-full py-2 rounded btn-primary-gradient text-white">Search</button>
         </aside>
 
         {/* Results */}
         <main className="md:col-span-3">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Results</h2>
+            <h2 className="text-lg font-semibold text-primary">Results</h2>
             <div className="flex items-center gap-2 text-sm">
-              <span className="text-gray-600 dark:text-gray-300">View:</span>
-              <button onClick={()=>setView('card')} className={`px-2 py-1 rounded border ${view==='card'?'border-gray-900 dark:border-gray-100':'border-gray-300 dark:border-gray-700'}`}>Card</button>
-              <button onClick={()=>setView('radar')} className={`px-2 py-1 rounded border ${view==='radar'?'border-gray-900 dark:border-gray-100':'border-gray-300 dark:border-gray-700'}`}>Radar</button>
+              <span className="text-secondary">View:</span>
+              <button onClick={()=>setView('card')} className={`px-2 py-1 rounded ${view==='card'?'btn-primary-gradient text-white':'btn-outline-gradient'}`}>Card</button>
+              <button onClick={()=>setView('radar')} className={`px-2 py-1 rounded ${view==='radar'?'btn-primary-gradient text-white':'btn-outline-gradient'}`}>Radar</button>
             </div>
           </div>
 

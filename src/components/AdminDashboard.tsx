@@ -22,19 +22,19 @@ export default function AdminDashboard() {
 
   return (
     <div className="mt-8">
-      <h2 className="text-2xl font-semibold text-black dark:text-white mb-4">Admin Dashboard</h2>
-      {error && <p className="text-red-600 dark:text-red-400 mb-4">{error}</p>}
+      <h2 className="text-2xl font-semibold text-primary mb-4">Admin Dashboard</h2>
+      {error && <p className="text-red-400 mb-4">{error}</p>}
       {metrics ? (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {Object.entries(metrics).map(([k, v]) => (
-            <div key={k} className="rounded-xl border border-gray-200 dark:border-gray-800 p-4 shadow-[0_0_12px_rgba(234,179,8,0.15)]">
-              <p className="text-sm text-gray-600 dark:text-gray-400 capitalize">{k}</p>
-              <p className="text-2xl font-bold text-black dark:text-white">{v}</p>
+            <div key={k} className="rounded-xl stat-card p-4">
+              <p className="text-sm text-secondary capitalize">{k}</p>
+              <p className="text-2xl font-bold text-primary">{v}</p>
             </div>
           ))}
         </div>
       ) : (
-        <p className="text-gray-600 dark:text-gray-300">Loading metrics...</p>
+        <p className="text-secondary">Loading metrics...</p>
       )}
     </div>
   );
