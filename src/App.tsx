@@ -136,15 +136,15 @@ function LandingPage({ isDark, toggleTheme, setUser }: LandingPageProps) {
                 <div className="text-gray-600 dark:text-gray-300">Students</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-semibold text-gray-900 dark:text-gray-100">100+</div>
+                <div className="text-3xl font-semibold text-white">200+</div>
                 <div className="text-gray-600 dark:text-gray-300">Projects</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-semibold text-gray-900 dark:text-gray-100">50+</div>
+                <div className="text-3xl font-semibold text-white">100+</div>
                 <div className="text-gray-600 dark:text-gray-300">Events</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-semibold text-gray-900 dark:text-gray-100">10+</div>
+                <div className="text-3xl font-semibold text-white">20+</div>
                 <div className="text-gray-600 dark:text-gray-300">Branches</div>
               </div>
             </div>
@@ -152,19 +152,19 @@ function LandingPage({ isDark, toggleTheme, setUser }: LandingPageProps) {
         </div>
       </div>
 
-      {/* Features Section */}
-      <div className="py-20 bg-white dark:bg-black">
+      {/* Why Collab Section */}
+      <div className="py-20 bg-transparent">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-              Everything you need to collaborate
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              Why Collab
             </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              Built specifically for KIET students, by KIET students. Experience seamless collaboration like never before.
+            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+              Find Teammates Instantly • Collaborate Across Branches • Showcase Your Projects • Win Hackathons & Prizes
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             <FeatureCard
               icon={<Users className="h-8 w-8" />}
               title="Student Discovery"
