@@ -108,11 +108,8 @@ function LandingPage({ isDark, toggleTheme, setUser }: LandingPageProps) {
       <div className="relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16">
           <div className="text-center">
-            <h1 className="text-5xl md:text-6xl font-bold text-black dark:text-white mb-6">
-              Connect. Create.{' '}
-              <span className="text-gray-900 dark:text-gray-100">
-                Collaborate.
-              </span>
+            <h1 className="text-5xl md:text-6xl font-extrabold text-white mb-6">
+              🚀 Hack. Build. <span className="bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(135deg,#6A0DAD,#9D4EDD,#C77DFF)' }}>Collaborate.</span>
             </h1>
             
             <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
