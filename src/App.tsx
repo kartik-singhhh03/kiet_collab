@@ -112,10 +112,9 @@ function LandingPage({ isDark, toggleTheme, setUser }: LandingPageProps) {
               🚀 Hack. Build. <span className="bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(135deg,#6A0DAD,#9D4EDD,#C77DFF)' }}>Collaborate.</span>
             </h1>
             
-            <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
-              The ultimate collaboration platform for KIET Group of Institutions. 
-              Discover talented peers, showcase your projects, participate in events, 
-              and build the future together.
+            <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
+              The ultimate platform for students to connect, form hackathon teams, showcase skills, and innovate together.
+              Whether you’re a coder, designer, or strategist — find your perfect teammates and build the future.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
