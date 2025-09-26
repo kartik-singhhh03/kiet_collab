@@ -108,11 +108,11 @@ function LandingPage({ isDark, toggleTheme, setUser }: LandingPageProps) {
       <div className="relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16">
           <div className="text-center">
-            <h1 className="text-5xl md:text-6xl font-extrabold text-white mb-6">
+            <h1 className="text-5xl md:text-6xl font-extrabold text-gray-900 dark:text-white mb-6">
               🚀 Hack. Build. <span className="bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(135deg,#6A0DAD,#9D4EDD,#C77DFF)' }}>Collaborate.</span>
             </h1>
             
-            <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
               The ultimate platform for students to connect, form hackathon teams, showcase skills, and innovate together.
               Whether you’re a coder, designer, or strategist — find your perfect teammates and build the future.
             </p>
@@ -136,15 +136,15 @@ function LandingPage({ isDark, toggleTheme, setUser }: LandingPageProps) {
                 <div className="text-gray-600 dark:text-gray-300">Students</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-semibold text-white">200+</div>
+                <div className="text-3xl font-semibold text-gray-900 dark:text-white">200+</div>
                 <div className="text-gray-600 dark:text-gray-300">Projects</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-semibold text-white">100+</div>
+                <div className="text-3xl font-semibold text-gray-900 dark:text-white">100+</div>
                 <div className="text-gray-600 dark:text-gray-300">Events</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-semibold text-white">20+</div>
+                <div className="text-3xl font-semibold text-gray-900 dark:text-white">20+</div>
                 <div className="text-gray-600 dark:text-gray-300">Branches</div>
               </div>
             </div>
