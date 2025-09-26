@@ -185,6 +185,30 @@ function LandingPage({ isDark, toggleTheme, setUser }: LandingPageProps) {
         </div>
       </div>
 
+      {/* How It Works */}
+      <section className="py-16 bg-transparent">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white">
+          <h2 className="text-3xl md:text-4xl font-bold mb-8">How It Works</h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="rounded-2xl p-6 border border-white/10 card-glow">
+              <div className="text-sm opacity-80 mb-2">Step 1</div>
+              <h3 className="text-xl font-semibold mb-2">Sign Up</h3>
+              <p className="opacity-80">Create your profile with skills and availability.</p>
+            </div>
+            <div className="rounded-2xl p-6 border border-white/10 card-glow">
+              <div className="text-sm opacity-80 mb-2">Step 2</div>
+              <h3 className="text-xl font-semibold mb-2">Find Team</h3>
+              <p className="opacity-80">Search and match with collaborators across branches.</p>
+            </div>
+            <div className="rounded-2xl p-6 border border-white/10 card-glow">
+              <div className="text-sm opacity-80 mb-2">Step 3</div>
+              <h3 className="text-xl font-semibold mb-2">Start Building</h3>
+              <p className="opacity-80">Join a hackathon, build fast, and showcase your project.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Auth Modal */}
       {showAuth && (
         <AuthModal
