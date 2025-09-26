@@ -165,30 +165,10 @@ function LandingPage({ isDark, toggleTheme, setUser }: LandingPageProps) {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <FeatureCard
-              icon={<Users className="h-8 w-8" />}
-              title="Student Discovery"
-              description="Find and connect with talented peers across different branches and years. Build your network and discover collaboration opportunities."
-              isDark={isDark}
-            />
-            <FeatureCard
-              icon={<Calendar className="h-8 w-8" />}
-              title="Events & Hackathons"
-              description="Stay updated with the latest events, hackathons, and competitions. Register, participate, and showcase your skills."
-              isDark={isDark}
-            />
-            <FeatureCard
-              icon={<Code className="h-8 w-8" />}
-              title="Project Showcase"
-              description="Display your projects, get feedback, and inspire others. From academic assignments to personal innovations."
-              isDark={isDark}
-            />
-            <FeatureCard
-              icon={<MessageSquare className="h-8 w-8" />}
-              title="Real-time Chat"
-              description="Instant messaging with typing indicators, file sharing, and group conversations. Stay connected with your team."
-              isDark={isDark}
-            />
+            <FeatureCard icon={<Users className="h-8 w-8" />} title="Find Teammates Instantly" description="Search by skills and availability to instantly find collaborators." isDark={isDark} />
+            <FeatureCard icon={<Calendar className="h-8 w-8" />} title="Collaborate Across Branches" description="Bridge departments and years; work with the best minds across KIET." isDark={isDark} />
+            <FeatureCard icon={<Code className="h-8 w-8" />} title="Showcase Your Projects" description="Publish projects, gather feedback, and build your portfolio." isDark={isDark} />
+            <FeatureCard icon={<Trophy className="h-8 w-8" />} title="Win Hackathons & Prizes" description="Form strong teams, ship fast, and climb leaderboards." isDark={isDark} />
             <FeatureCard
               icon={<Trophy className="h-8 w-8" />}
               title="Q&A Forum"
