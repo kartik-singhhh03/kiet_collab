@@ -28,3 +28,11 @@
 
 /* Card glow */
 .card-glow { box-shadow: 0 0 32px rgba(157, 78, 221, 0.25); }
+
+/* Glass nav with purple glow */
+.nav-glass {
+  backdrop-filter: saturate(140%) blur(14px);
+  background: linear-gradient(135deg, rgba(13,13,43,0.60), rgba(106,13,173,0.25));
+  border-bottom: 1px solid rgba(157, 78, 221, 0.25);
+  box-shadow: 0 10px 30px rgba(106, 13, 173, 0.15);
+}
