@@ -155,12 +155,12 @@ function LandingPage({ isDark, toggleTheme, setUser }: LandingPageProps) {
       {/* Why Collab Section */}
       <div className="py-20 bg-transparent">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16 text-white">
+          <div className="text-center mb-16 text-gray-900 dark:text-white">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
               Why Collab
             </h2>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              Find Teammates Instantly • Collaborate Across Branches • Showcase Your Projects • Win Hackathons & Prizes
+              Find Teammates Instantly • Collaborate Across Branches • Showcase Your Projects �� Win Hackathons & Prizes
             </p>
           </div>
 
@@ -187,20 +187,20 @@ function LandingPage({ isDark, toggleTheme, setUser }: LandingPageProps) {
 
       {/* How It Works */}
       <section className="py-16 bg-transparent">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-gray-900 dark:text-white">
           <h2 className="text-3xl md:text-4xl font-bold mb-8">How It Works</h2>
           <div className="grid md:grid-cols-3 gap-6">
-            <div className="rounded-2xl p-6 border border-white/10 card-glow">
+            <div className="rounded-2xl p-6 bg-white border border-gray-200 dark:bg-white/5 dark:border-white/10 card-glow">
               <div className="text-sm opacity-80 mb-2">Step 1</div>
               <h3 className="text-xl font-semibold mb-2">Sign Up</h3>
               <p className="opacity-80">Create your profile with skills and availability.</p>
             </div>
-            <div className="rounded-2xl p-6 border border-white/10 card-glow">
+            <div className="rounded-2xl p-6 bg-white border border-gray-200 dark:bg-white/5 dark:border-white/10 card-glow">
               <div className="text-sm opacity-80 mb-2">Step 2</div>
               <h3 className="text-xl font-semibold mb-2">Find Team</h3>
               <p className="opacity-80">Search and match with collaborators across branches.</p>
             </div>
-            <div className="rounded-2xl p-6 border border-white/10 card-glow">
+            <div className="rounded-2xl p-6 bg-white border border-gray-200 dark:bg-white/5 dark:border-white/10 card-glow">
               <div className="text-sm opacity-80 mb-2">Step 3</div>
               <h3 className="text-xl font-semibold mb-2">Start Building</h3>
               <p className="opacity-80">Join a hackathon, build fast, and showcase your project.</p>
@@ -232,7 +232,7 @@ interface FeatureCardProps {
 
 function FeatureCard({ icon, title, description, isDark }: FeatureCardProps) {
   return (
-    <div className="group p-6 rounded-2xl bg-white/5 dark:bg-white/5 border border-white/10 transition-all duration-300 hover:-translate-y-1 card-glow">
+    <div className="group p-6 rounded-2xl bg-white border border-gray-200 dark:bg-white/5 dark:border-white/10 transition-all duration-300 hover:-translate-y-1 card-glow">
       <div className="text-gray-700 dark:text-gray-300 mb-4 group-hover:scale-110 transition-transform duration-200">
         {icon}
       </div>
