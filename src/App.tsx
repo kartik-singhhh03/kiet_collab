@@ -122,7 +122,7 @@ function LandingPage({ isDark, toggleTheme, setUser }: LandingPageProps) {
                 onClick={() => setShowAuth(true)}
                 className="px-8 py-4 rounded-xl text-white text-lg font-medium btn-primary-purple"
               >
-                Join KIET Collab
+                🔥 Join a Hackathon Team
               </button>
               <button className="px-8 py-4 border border-gray-900 text-gray-900 dark:border-gray-100 dark:text-gray-100 rounded-xl hover:bg-gray-50 dark:hover:bg-white/10 transition-all duration-200 text-lg font-medium">
                 Learn More
