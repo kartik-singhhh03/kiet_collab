@@ -155,7 +155,7 @@ function LandingPage({ isDark, toggleTheme, setUser }: LandingPageProps) {
       {/* Why Collab Section */}
       <div className="py-20 bg-transparent">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
+          <div className="text-center mb-16 text-white">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
               Why Collab
             </h2>
