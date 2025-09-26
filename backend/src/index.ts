@@ -16,6 +16,7 @@ import userRoutes from './routes/users';
 import eventRoutes from './routes/events';
 import projectRoutes from './routes/projects';
 import forumRoutes from './routes/forum';
+import adminRoutes from './routes/admin';
 import { errorHandler } from './middleware/errorHandler';
 import { rateLimiter } from './middleware/rateLimiter';
 import { setupSocketIO } from './socket/socketHandler';
@@ -101,6 +102,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/events', eventRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/forum', forumRoutes);
+app.use('/api/admin', adminRoutes);
 
 // Socket.IO setup
 setupSocketIO(io);

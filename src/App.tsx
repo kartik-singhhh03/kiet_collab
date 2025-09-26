@@ -10,7 +10,7 @@ interface User {
 }
 
 function App() {
-  const [isDark, setIsDark] = useState(false);
+  const [isDark, setIsDark] = useState(true);
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -49,6 +49,9 @@ function App() {
   }
 
   if (user) {
+    if (typeof window !== 'undefined' && window.location.pathname === '/discover') {
+      return <StudentDiscovery isDark={isDark} toggleTheme={toggleTheme} user={user} />;
+    }
     return <Dashboard user={user} isDark={isDark} toggleTheme={toggleTheme} />;
   }
 
@@ -61,21 +64,23 @@ interface LandingPageProps {
   setUser: (user: User | null) => void;
 }
 
+const API = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
 function LandingPage({ isDark, toggleTheme, setUser }: LandingPageProps) {
   const [showAuth, setShowAuth] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
 
   return (
-    <div className={`min-h-screen transition-colors duration-300 ${isDark ? 'dark bg-gray-900' : 'bg-gradient-to-br from-blue-50 via-white to-purple-50'}`}>
+    <div className={`min-h-screen transition-colors duration-300 ${isDark ? 'dark bg-futuristic-dark' : 'bg-white'}`}>
       {/* Glassmorphism Navigation */}
-      <nav className="sticky top-0 z-50 backdrop-blur-lg bg-white/70 dark:bg-gray-900/70 border-b border-white/20 dark:border-gray-700/20">
+      <nav className="sticky top-0 z-50 nav-glass">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center space-x-3">
-              <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
-                <Code className="h-6 w-6 text-white" />
+              <div className="h-10 w-10 rounded-md border border-gray-300 dark:border-gray-700 bg-transparent flex items-center justify-center">
+                <Code className="h-6 w-6 text-gray-900 dark:text-gray-100" />
               </div>
-              <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              <span className="text-xl font-bold text-black dark:text-white">
                 KIET Collab
               </span>
             </div>
@@ -83,14 +88,14 @@ function LandingPage({ isDark, toggleTheme, setUser }: LandingPageProps) {
             <div className="flex items-center space-x-4">
               <button
                 onClick={toggleTheme}
-                className="p-2 rounded-lg bg-white/20 dark:bg-gray-800/20 backdrop-blur-sm border border-white/30 dark:border-gray-700/30 hover:bg-white/30 dark:hover:bg-gray-800/30 transition-all duration-200"
+                className="p-2 rounded-lg bg-transparent border border-gray-200 dark:border-gray-800 hover:bg-black/5 dark:hover:bg-white/5 transition-all duration-200 shadow-[0_0_12px_rgba(234,179,8,0.25)]"
               >
-                {isDark ? <Sun className="h-5 w-5 text-yellow-500" /> : <Moon className="h-5 w-5 text-gray-600" />}
+                {isDark ? <Sun className="h-5 w-5 text-gray-500" /> : <Moon className="h-5 w-5 text-gray-600" />}
               </button>
               
               <button
                 onClick={() => setShowAuth(true)}
-                className="px-6 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl"
+                className="px-6 py-2 bg-black text-white dark:bg-white dark:text-black rounded-lg hover:opacity-90 transition-all duration-200 shadow-none"
               >
                 Get Started
               </button>
@@ -103,27 +108,23 @@ function LandingPage({ isDark, toggleTheme, setUser }: LandingPageProps) {
       <div className="relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16">
           <div className="text-center">
-            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
-              Connect. Create.{' '}
-              <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                Collaborate.
-              </span>
+            <h1 className="text-5xl md:text-6xl font-extrabold text-gray-900 dark:text-white mb-6">
+              🚀 Hack. Build. <span className="bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(135deg,#6A0DAD,#9D4EDD,#C77DFF)' }}>Collaborate.</span>
             </h1>
             
             <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
-              The ultimate collaboration platform for KIET Group of Institutions. 
-              Discover talented peers, showcase your projects, participate in events, 
-              and build the future together.
+              The ultimate platform for students to connect, form hackathon teams, showcase skills, and innovate together.
+              Whether you’re a coder, designer, or strategist — find your perfect teammates and build the future.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
               <button
                 onClick={() => setShowAuth(true)}
-                className="px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl hover:from-blue-600 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl text-lg font-medium"
+                className="px-8 py-4 rounded-xl text-white text-lg font-medium btn-primary-purple"
               >
-                Join KIET Collab
+                🔥 Join a Hackathon Team
               </button>
-              <button className="px-8 py-4 border-2 border-blue-500 text-blue-600 dark:text-blue-400 rounded-xl hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-200 text-lg font-medium">
+              <button className="px-8 py-4 rounded-xl text-lg font-medium btn-outline-purple">
                 Learn More
               </button>
             </div>
@@ -131,19 +132,19 @@ function LandingPage({ isDark, toggleTheme, setUser }: LandingPageProps) {
             {/* Stats */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
               <div className="text-center">
-                <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">5000+</div>
+                <div className="text-3xl font-semibold text-gray-900 dark:text-gray-100">5000+</div>
                 <div className="text-gray-600 dark:text-gray-300">Students</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-purple-600 dark:text-purple-400">100+</div>
+                <div className="text-3xl font-semibold text-gray-900 dark:text-white">200+</div>
                 <div className="text-gray-600 dark:text-gray-300">Projects</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-green-600 dark:text-green-400">50+</div>
+                <div className="text-3xl font-semibold text-gray-900 dark:text-white">100+</div>
                 <div className="text-gray-600 dark:text-gray-300">Events</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-orange-600 dark:text-orange-400">10+</div>
+                <div className="text-3xl font-semibold text-gray-900 dark:text-white">20+</div>
                 <div className="text-gray-600 dark:text-gray-300">Branches</div>
               </div>
             </div>
@@ -151,43 +152,23 @@ function LandingPage({ isDark, toggleTheme, setUser }: LandingPageProps) {
         </div>
       </div>
 
-      {/* Features Section */}
-      <div className="py-20 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
+      {/* Why Collab Section */}
+      <div className="py-20 bg-transparent">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-              Everything you need to collaborate
+          <div className="text-center mb-16 text-gray-900 dark:text-white">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              Why Collab
             </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              Built specifically for KIET students, by KIET students. Experience seamless collaboration like never before.
+            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+              Find Teammates Instantly • Collaborate Across Branches • Showcase Your Projects �� Win Hackathons & Prizes
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <FeatureCard
-              icon={<Users className="h-8 w-8" />}
-              title="Student Discovery"
-              description="Find and connect with talented peers across different branches and years. Build your network and discover collaboration opportunities."
-              isDark={isDark}
-            />
-            <FeatureCard
-              icon={<Calendar className="h-8 w-8" />}
-              title="Events & Hackathons"
-              description="Stay updated with the latest events, hackathons, and competitions. Register, participate, and showcase your skills."
-              isDark={isDark}
-            />
-            <FeatureCard
-              icon={<Code className="h-8 w-8" />}
-              title="Project Showcase"
-              description="Display your projects, get feedback, and inspire others. From academic assignments to personal innovations."
-              isDark={isDark}
-            />
-            <FeatureCard
-              icon={<MessageSquare className="h-8 w-8" />}
-              title="Real-time Chat"
-              description="Instant messaging with typing indicators, file sharing, and group conversations. Stay connected with your team."
-              isDark={isDark}
-            />
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <FeatureCard icon={<Users className="h-8 w-8" />} title="Find Teammates Instantly" description="Search by skills and availability to instantly find collaborators." isDark={isDark} />
+            <FeatureCard icon={<Calendar className="h-8 w-8" />} title="Collaborate Across Branches" description="Bridge departments and years; work with the best minds across KIET." isDark={isDark} />
+            <FeatureCard icon={<Code className="h-8 w-8" />} title="Showcase Your Projects" description="Publish projects, gather feedback, and build your portfolio." isDark={isDark} />
+            <FeatureCard icon={<Trophy className="h-8 w-8" />} title="Win Hackathons & Prizes" description="Form strong teams, ship fast, and climb leaderboards." isDark={isDark} />
             <FeatureCard
               icon={<Trophy className="h-8 w-8" />}
               title="Q&A Forum"
@@ -203,6 +184,30 @@ function LandingPage({ isDark, toggleTheme, setUser }: LandingPageProps) {
           </div>
         </div>
       </div>
+
+      {/* How It Works */}
+      <section className="py-16 bg-transparent">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-gray-900 dark:text-white">
+          <h2 className="text-3xl md:text-4xl font-bold mb-8">How It Works</h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="rounded-2xl p-6 bg-white border border-gray-200 dark:bg-white/5 dark:border-white/10 card-glow">
+              <div className="text-sm opacity-80 mb-2">Step 1</div>
+              <h3 className="text-xl font-semibold mb-2">Sign Up</h3>
+              <p className="opacity-80">Create your profile with skills and availability.</p>
+            </div>
+            <div className="rounded-2xl p-6 bg-white border border-gray-200 dark:bg-white/5 dark:border-white/10 card-glow">
+              <div className="text-sm opacity-80 mb-2">Step 2</div>
+              <h3 className="text-xl font-semibold mb-2">Find Team</h3>
+              <p className="opacity-80">Search and match with collaborators across branches.</p>
+            </div>
+            <div className="rounded-2xl p-6 bg-white border border-gray-200 dark:bg-white/5 dark:border-white/10 card-glow">
+              <div className="text-sm opacity-80 mb-2">Step 3</div>
+              <h3 className="text-xl font-semibold mb-2">Start Building</h3>
+              <p className="opacity-80">Join a hackathon, build fast, and showcase your project.</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Auth Modal */}
       {showAuth && (
@@ -227,8 +232,8 @@ interface FeatureCardProps {
 
 function FeatureCard({ icon, title, description, isDark }: FeatureCardProps) {
   return (
-    <div className="group p-6 rounded-2xl bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm border border-white/20 dark:border-gray-700/20 hover:bg-white/80 dark:hover:bg-gray-800/80 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
-      <div className="text-blue-600 dark:text-blue-400 mb-4 group-hover:scale-110 transition-transform duration-200">
+    <div className="group p-6 rounded-2xl bg-white border border-gray-200 dark:bg-white/5 dark:border-white/10 transition-all duration-300 hover:-translate-y-1 card-glow">
+      <div className="text-gray-700 dark:text-gray-300 mb-4 group-hover:scale-110 transition-transform duration-200">
         {icon}
       </div>
       <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">{title}</h3>
@@ -263,7 +268,7 @@ function AuthModal({ isLogin, setIsLogin, onClose, onSuccess, isDark }: AuthModa
 
     try {
       const endpoint = isLogin ? '/api/auth/login' : '/api/auth/register';
-      const response = await fetch(`http://localhost:3000${endpoint}`, {
+      const response = await fetch(`${API}${endpoint}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -328,7 +333,7 @@ function AuthModal({ isLogin, setIsLogin, onClose, onSuccess, isDark }: AuthModa
                 value={formData.email}
                 onChange={handleInputChange}
                 placeholder="yourname@kiet.edu"
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100 focus:border-transparent transition-all duration-200"
               />
             </div>
 
@@ -343,7 +348,7 @@ function AuthModal({ isLogin, setIsLogin, onClose, onSuccess, isDark }: AuthModa
                 value={formData.password}
                 onChange={handleInputChange}
                 placeholder="Enter your password"
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100 focus:border-transparent transition-all duration-200"
               />
             </div>
 
@@ -360,7 +365,7 @@ function AuthModal({ isLogin, setIsLogin, onClose, onSuccess, isDark }: AuthModa
                     value={formData.name}
                     onChange={handleInputChange}
                     placeholder="Enter your full name"
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100 focus:border-transparent transition-all duration-200"
                   />
                 </div>
 
@@ -373,7 +378,7 @@ function AuthModal({ isLogin, setIsLogin, onClose, onSuccess, isDark }: AuthModa
                       name="year"
                       value={formData.year}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                      className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100 focus:border-transparent transition-all duration-200"
                     >
                       <option value="">Select Year</option>
                       <option value="1">1st Year</option>
@@ -391,7 +396,7 @@ function AuthModal({ isLogin, setIsLogin, onClose, onSuccess, isDark }: AuthModa
                       name="branch"
                       value={formData.branch}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                      className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100 focus:border-transparent transition-all duration-200"
                     >
                       <option value="">Select Branch</option>
                       <option value="CSE">CSE</option>
@@ -417,7 +422,7 @@ function AuthModal({ isLogin, setIsLogin, onClose, onSuccess, isDark }: AuthModa
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-3 px-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed font-medium"
+              className="w-full py-3 px-4 bg-black text-white dark:bg-white dark:text-black rounded-lg hover:opacity-90 transition-all duration-200 shadow-none disabled:opacity-50 disabled:cursor-not-allowed font-medium"
             >
               {isLoading ? 'Please wait...' : (isLogin ? 'Sign In' : 'Create Account')}
             </button>
@@ -428,7 +433,7 @@ function AuthModal({ isLogin, setIsLogin, onClose, onSuccess, isDark }: AuthModa
               {isLogin ? "Don't have an account?" : "Already have an account?"}{' '}
               <button
                 onClick={() => setIsLogin(!isLogin)}
-                className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
+                className="text-gray-700 dark:text-gray-300 hover:underline font-medium"
               >
                 {isLogin ? 'Sign up' : 'Sign in'}
               </button>
@@ -446,6 +451,9 @@ interface DashboardProps {
   toggleTheme: () => void;
 }
 
+import AdminDashboard from './components/AdminDashboard';
+import StudentDiscovery from './pages/StudentDiscovery';
+
 function Dashboard({ user, isDark, toggleTheme }: DashboardProps) {
   const handleLogout = () => {
     localStorage.removeItem('accessToken');
@@ -455,35 +463,35 @@ function Dashboard({ user, isDark, toggleTheme }: DashboardProps) {
   };
 
   return (
-    <div className={`min-h-screen transition-colors duration-300 ${isDark ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
+    <div className={`min-h-screen transition-colors duration-300 ${isDark ? 'dark bg-futuristic-dark' : 'bg-white'}`}>
       {/* Navigation */}
-      <nav className="sticky top-0 z-50 backdrop-blur-lg bg-white/70 dark:bg-gray-900/70 border-b border-white/20 dark:border-gray-700/20">
+      <nav className="sticky top-0 z-50 nav-glass">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center space-x-3">
-              <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
-                <Code className="h-6 w-6 text-white" />
+              <div className="h-10 w-10 rounded-md border border-gray-300 dark:border-gray-700 bg-transparent flex items-center justify-center">
+                <Code className="h-6 w-6 text-gray-900 dark:text-gray-100" />
               </div>
-              <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              <span className="text-xl font-bold text-black dark:text-white">
                 KIET Collab
               </span>
             </div>
             
             <div className="flex items-center space-x-4">
-              <button className="p-2 rounded-lg bg-white/20 dark:bg-gray-800/20 backdrop-blur-sm border border-white/30 dark:border-gray-700/30 hover:bg-white/30 dark:hover:bg-gray-800/30 transition-all duration-200 relative">
+              <button className="p-2 rounded-lg bg-transparent border border-gray-200 dark:border-gray-800 hover:bg-black/5 dark:hover:bg-white/5 transition-all duration-200 relative shadow-[0_0_12px_rgba(234,179,8,0.25)]">
                 <Bell className="h-5 w-5 text-gray-600 dark:text-gray-300" />
-                <span className="absolute -top-1 -right-1 h-3 w-3 bg-red-500 rounded-full"></span>
+                <span className="absolute -top-1 -right-1 h-3 w-3 bg-gray-500 rounded-full"></span>
               </button>
               
               <button
                 onClick={toggleTheme}
-                className="p-2 rounded-lg bg-white/20 dark:bg-gray-800/20 backdrop-blur-sm border border-white/30 dark:border-gray-700/30 hover:bg-white/30 dark:hover:bg-gray-800/30 transition-all duration-200"
+                className="p-2 rounded-lg bg-transparent border border-gray-200 dark:border-gray-800 hover:bg-black/5 dark:hover:bg-white/5 transition-all duration-200 shadow-[0_0_12px_rgba(234,179,8,0.25)]"
               >
-                {isDark ? <Sun className="h-5 w-5 text-yellow-500" /> : <Moon className="h-5 w-5 text-gray-600" />}
+                {isDark ? <Sun className="h-5 w-5 text-gray-500" /> : <Moon className="h-5 w-5 text-gray-600" />}
               </button>
 
               <div className="flex items-center space-x-3">
-                <div className="h-8 w-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                <div className="h-8 w-8 rounded-full bg-black dark:bg-white flex items-center justify-center shadow-[0_0_12px_rgba(234,179,8,0.25)]">
                   <span className="text-white text-sm font-medium">
                     {user.name.charAt(0).toUpperCase()}
                   </span>
@@ -547,7 +555,11 @@ function Dashboard({ user, isDark, toggleTheme }: DashboardProps) {
           />
         </div>
 
-        {/* Coming Soon Cards */}
+        {user.role === 'admin' && (
+          <AdminDashboard />
+        )}
+
+        {/* Modules */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           <ComingSoonCard
             title="Project Showcase"
@@ -601,14 +613,14 @@ interface StatCardProps {
 
 function StatCard({ title, value, icon, color, isDark }: StatCardProps) {
   const colorClasses = {
-    blue: 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20',
-    green: 'text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20',
-    purple: 'text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-900/20',
-    orange: 'text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-900/20'
+    blue: 'text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-900/40',
+    green: 'text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-900/40',
+    purple: 'text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-900/40',
+    orange: 'text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-900/40'
   };
 
   return (
-    <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-2xl p-6 border border-white/20 dark:border-gray-700/20">
+    <div className="bg-white dark:bg-black rounded-2xl p-6 border border-gray-200 dark:border-gray-800 shadow-none">
       <div className="flex items-center justify-between">
         <div>
           <p className="text-sm font-medium text-gray-600 dark:text-gray-300">{title}</p>
@@ -631,12 +643,12 @@ interface ComingSoonCardProps {
 
 function ComingSoonCard({ title, description, icon, isDark }: ComingSoonCardProps) {
   return (
-    <div className="bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm rounded-2xl p-6 border border-white/20 dark:border-gray-700/20 hover:bg-white/80 dark:hover:bg-gray-800/80 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl group">
+    <div className="bg-white dark:bg-black rounded-2xl p-6 border border-gray-200 dark:border-gray-800 transition-all duration-300 hover:-translate-y-1 shadow-none hover:shadow-none group">
       <div className="flex items-start justify-between mb-4">
-        <div className="text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform duration-200">
+        <div className="text-gray-700 dark:text-gray-300 group-hover:scale-110 transition-transform duration-200">
           {icon}
         </div>
-        <span className="px-3 py-1 bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-blue-600 dark:text-blue-400 text-xs font-medium rounded-full">
+        <span className="px-3 py-1 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 text-xs font-medium rounded-full">
           Coming Soon
         </span>
       </div>
