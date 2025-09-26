@@ -1,3 +1,30 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Futuristic background (dark) */
+.bg-futuristic-dark {
+  background:
+    radial-gradient(600px 300px at 50% -10%, rgba(106, 13, 173, 0.35), transparent 60%),
+    radial-gradient(800px 400px at 80% 20%, rgba(13, 13, 43, 0.6), transparent 50%),
+    #0D0D2B;
+}
+
+/* Purple CTA button */
+.btn-primary-purple {
+  background-image: linear-gradient(135deg, #6A0DAD, #9D4EDD, #C77DFF);
+  box-shadow: 0 0 24px rgba(157, 78, 221, 0.45);
+  transition: box-shadow 200ms ease, transform 200ms ease;
+}
+.btn-primary-purple:hover { box-shadow: 0 0 36px rgba(157, 78, 221, 0.65); transform: translateY(-1px); }
+
+/* Outline purple */
+.btn-outline-purple {
+  color: #9D4EDD;
+  border: 1px solid rgba(157, 78, 221, 0.6);
+  background: rgba(255,255,255,0.04);
+}
+.btn-outline-purple:hover { background: rgba(157, 78, 221, 0.08); }
+
+/* Card glow */
+.card-glow { box-shadow: 0 0 32px rgba(157, 78, 221, 0.25); }
