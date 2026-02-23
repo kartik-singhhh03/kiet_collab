@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from "express";
 
 export interface CustomError extends Error {
   statusCode?: number;
@@ -9,7 +9,7 @@ export const errorHandler = (
   err: CustomError,
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   console.error(err.stack);
 
@@ -17,25 +17,27 @@ export const errorHandler = (
   error.message = err.message;
 
   // Mongoose bad ObjectId
-  if (err.name === 'CastError') {
-    const message = 'Resource not found';
+  if (err.name === "CastError") {
+    const message = "Resource not found";
     error = { message, statusCode: 404 } as CustomError;
   }
 
   // Mongoose duplicate key
-  if (err.code === '11000') {
-    const message = 'Duplicate field value entered';
+  if (err.code === "11000") {
+    const message = "Duplicate field value entered";
     error = { message, statusCode: 400 } as CustomError;
   }
 
   // Mongoose validation error
-  if (err.name === 'ValidationError') {
-    const message = Object.values((err as any).errors).map((val: any) => val.message);
-    error = { message, statusCode: 400 } as CustomError;
+  if (err.name === "ValidationError") {
+    const message = Object.values((err as any).errors).map(
+      (val: any) => val.message,
+    );
+    error = { message: message as any, statusCode: 400 } as CustomError;
   }
 
   res.status(error.statusCode || 500).json({
-    error: error.message || 'Server Error',
-    ...(process.env.NODE_ENV === 'development' && { stack: err.stack })
+    error: error.message || "Server Error",
+    ...(process.env.NODE_ENV === "development" && { stack: err.stack }),
   });
 };

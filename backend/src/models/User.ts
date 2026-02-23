@@ -1,5 +1,5 @@
-import { Schema, model, Document } from 'mongoose';
-import bcrypt from 'bcryptjs';
+import { Schema, model, Document } from "mongoose";
+import bcrypt from "bcryptjs";
 
 export interface IUser extends Document {
   _id: string;
@@ -9,14 +9,24 @@ export interface IUser extends Document {
   name: string;
   avatar?: string;
   bio?: string;
-  year?: number;
+  /** Lowercase branch code parsed from email — e.g. "csit" */
   branch?: string;
+  /** 4-digit prefix from email — e.g. "2327" */
+  library_prefix?: string;
+  /** 4-digit suffix from email — e.g. "1113" */
+  library_suffix?: string;
+  /** Uppercase full library ID — e.g. "2327CSIT1113" */
+  library_id?: string;
+  /** e.g. 2023 — derived from first 2 digits of library_prefix */
+  batch_start_year?: number;
+  /** e.g. 2027 — derived from last 2 digits of library_prefix */
+  batch_end_year?: number;
   skills: string[];
-  role: 'student' | 'faculty' | 'admin';
+  role: "student" | "faculty" | "admin";
   isEmailVerified: boolean;
   lastActive: Date;
   preferences: {
-    theme: 'light' | 'dark';
+    theme: "light" | "dark";
     notifications: {
       email: boolean;
       push: boolean;
@@ -79,103 +89,126 @@ export interface IUser extends Document {
  *           description: Email verification status
  */
 
-const userSchema = new Schema<IUser>({
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    lowercase: true,
-    match: [/^[^\s@]+@kiet\.edu$/, 'Email must be a valid KIET email address']
-  },
-  password: {
-    type: String,
-    minlength: 8,
-    select: false
-  },
-  googleId: {
-    type: String,
-    sparse: true
-  },
-  name: {
-    type: String,
-    required: true,
-    trim: true,
-    maxlength: 100
-  },
-  avatar: {
-    type: String,
-    default: ''
-  },
-  bio: {
-    type: String,
-    maxlength: 500,
-    default: ''
-  },
-  year: {
-    type: Number,
-    min: 1,
-    max: 4
-  },
-  branch: {
-    type: String,
-    enum: ['CSE', 'IT', 'ECE', 'EEE', 'ME', 'CE', 'MBA', 'MCA'],
-    uppercase: true
-  },
-  skills: [{
-    type: String,
-    trim: true
-  }],
-  role: {
-    type: String,
-    enum: ['student', 'faculty', 'admin'],
-    default: 'student'
-  },
-  isEmailVerified: {
-    type: Boolean,
-    default: false
-  },
-  lastActive: {
-    type: Date,
-    default: Date.now
-  },
-  preferences: {
-    theme: {
+const userSchema = new Schema<IUser>(
+  {
+    email: {
       type: String,
-      enum: ['light', 'dark'],
-      default: 'light'
+      required: true,
+      unique: true,
+      lowercase: true,
+      trim: true,
+      match: [
+        /^[a-zA-Z]+\.([0-9]{4})([a-zA-Z]+)([0-9]{4})@kiet\.edu$/i,
+        "Email must follow KIET format: firstname.YYYYbranchNNNN@kiet.edu",
+      ],
     },
-    notifications: {
-      email: { type: Boolean, default: true },
-      push: { type: Boolean, default: true },
-      chat: { type: Boolean, default: true }
-    }
+    password: {
+      type: String,
+      minlength: 8,
+      select: false,
+    },
+    googleId: {
+      type: String,
+      sparse: true,
+    },
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+      maxlength: 100,
+    },
+    avatar: {
+      type: String,
+      default: "",
+    },
+    bio: {
+      type: String,
+      maxlength: 500,
+      default: "",
+    },
+    /** Lowercase branch code — e.g. "csit". Auto-populated from email. */
+    branch: {
+      type: String,
+      lowercase: true,
+      trim: true,
+    },
+    /** e.g. "2327" — first segment after dot in email */
+    library_prefix: { type: String, trim: true },
+    /** e.g. "1113" — last segment before @kiet.edu */
+    library_suffix: { type: String, trim: true },
+    /** e.g. "2327CSIT1113" — unique institutional identifier */
+    library_id: {
+      type: String,
+      unique: true,
+      sparse: true,
+      uppercase: true,
+      trim: true,
+    },
+    /** e.g. 2023 */
+    batch_start_year: { type: Number },
+    /** e.g. 2027 */
+    batch_end_year: { type: Number },
+    skills: [
+      {
+        type: String,
+        trim: true,
+      },
+    ],
+    role: {
+      type: String,
+      enum: ["student", "faculty", "admin"],
+      default: "student",
+    },
+    isEmailVerified: {
+      type: Boolean,
+      default: false,
+    },
+    lastActive: {
+      type: Date,
+      default: Date.now,
+    },
+    preferences: {
+      theme: {
+        type: String,
+        enum: ["light", "dark"],
+        default: "light",
+      },
+      notifications: {
+        email: { type: Boolean, default: true },
+        push: { type: Boolean, default: true },
+        chat: { type: Boolean, default: true },
+      },
+    },
+    socialLinks: {
+      github: String,
+      linkedin: String,
+      portfolio: String,
+    },
   },
-  socialLinks: {
-    github: String,
-    linkedin: String,
-    portfolio: String
-  }
-}, {
-  timestamps: true,
-  toJSON: {
-    transform: function(doc, ret) {
-      delete ret.password;
-      delete (ret as any).__v;
-      return ret;
-    }
-  }
-});
+  {
+    timestamps: true,
+    toJSON: {
+      transform: function (doc, ret) {
+        delete ret.password;
+        delete (ret as any).__v;
+        return ret;
+      },
+    },
+  },
+);
 
 // Indexes
-userSchema.index({ email: 1 });
+// Note: email and library_id already have unique:true on the field definition.
+// Additional compound/query indexes only:
 userSchema.index({ role: 1 });
 userSchema.index({ skills: 1 });
 userSchema.index({ branch: 1 });
+userSchema.index({ batch_start_year: 1 });
 userSchema.index({ lastActive: -1 });
 
 // Hash password before saving
-userSchema.pre('save', async function(next) {
-  if (!this.isModified('password') || !this.password) {
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password") || !this.password) {
     return next();
   }
 
@@ -189,7 +222,9 @@ userSchema.pre('save', async function(next) {
 });
 
 // Compare password method
-userSchema.methods.comparePassword = async function(candidatePassword: string): Promise<boolean> {
+userSchema.methods.comparePassword = async function (
+  candidatePassword: string,
+): Promise<boolean> {
   if (!this.password) {
     return false;
   }
@@ -197,9 +232,9 @@ userSchema.methods.comparePassword = async function(candidatePassword: string): 
 };
 
 // Update last active timestamp
-userSchema.methods.updateLastActive = function() {
+userSchema.methods.updateLastActive = function () {
   this.lastActive = new Date();
   return this.save();
 };
 
-export default model<IUser>('User', userSchema);
+export default model<IUser>("User", userSchema);

@@ -2,10 +2,11 @@ import React, { useState, useEffect } from "react";
 import ProfilePage from "./ProfilePage";
 import TeammatesPage from "./TeammatesPage";
 import TeamsPage from "./TeamsPage";
-import SubmissionPage from "./SubmissionPage";
+import HackathonsPage from "./HackathonsPage";
 import QAForumPage from "./QAForumPage";
 import LeaderboardPage from "./LeaderboardPage";
 import AdminAnalyticsDashboard from "./AdminAnalyticsDashboard";
+import NotificationBell from "../components/NotificationBell";
 import {
   LayoutDashboard,
   User,
@@ -368,7 +369,11 @@ function Sidebar({ active, onNav, user, onLogout, open }: SidebarProps) {
         >
           Navigation
         </p>
-        {NAV.map(({ id, label, icon: Icon }) => {
+        {NAV.filter(({ id }) => {
+          // Hide analytics nav item from regular students
+          if (id === "analytics" && user.role === "student") return false;
+          return true;
+        }).map(({ id, label, icon: Icon }) => {
           const isActive = active === id;
           return (
             <div
@@ -489,11 +494,20 @@ interface QuickCardProps {
   desc: string;
   label: string;
   delay?: number;
+  onClick?: () => void;
 }
-function QuickCard({ icon, title, desc, label, delay = 0 }: QuickCardProps) {
+function QuickCard({
+  icon,
+  title,
+  desc,
+  label,
+  delay = 0,
+  onClick,
+}: QuickCardProps) {
   return (
     <div
       className="sd-card-lift sd-fadein"
+      onClick={onClick}
       style={{
         background: B.card,
         borderRadius: "1.25rem",
@@ -667,8 +681,9 @@ interface HackathonRowProps {
   date: string;
   status: "open" | "soon" | "closed";
   seats: number;
+  onNav?: (id: NavId) => void;
 }
-function HackathonRow({ name, date, status, seats }: HackathonRowProps) {
+function HackathonRow({ name, date, status, seats, onNav }: HackathonRowProps) {
   const statusMap = {
     open: { label: "Open", bg: "rgba(56,161,105,0.09)", color: B.green },
     soon: { label: "Coming Soon", bg: "rgba(217,119,6,0.09)", color: B.amber },
@@ -727,7 +742,7 @@ function HackathonRow({ name, date, status, seats }: HackathonRowProps) {
           {s.label}
         </span>
         {status === "open" && (
-          <PillBtn variant="outline">
+          <PillBtn variant="outline" onClick={() => onNav?.("hackathons")}>
             Register <ArrowUpRight size={12} />
           </PillBtn>
         )}
@@ -803,7 +818,13 @@ function ActivityItem({
 /* ═══════════════════════════════════════════════════
    TEAM STATUS CARD
 ═══════════════════════════════════════════════════ */
-function TeamStatusCard({ hasTeam }: { hasTeam: boolean }) {
+function TeamStatusCard({
+  hasTeam,
+  onNav,
+}: {
+  hasTeam: boolean;
+  onNav: (id: NavId) => void;
+}) {
   return (
     <div
       style={{
@@ -888,7 +909,7 @@ function TeamStatusCard({ hasTeam }: { hasTeam: boolean }) {
           <CheckCircle2 size={11} /> Active
         </Badge>
       ) : (
-        <PillBtn>
+        <PillBtn onClick={() => onNav("teammates")}>
           Find Team <ChevronRight size={13} />
         </PillBtn>
       )}
@@ -899,7 +920,13 @@ function TeamStatusCard({ hasTeam }: { hasTeam: boolean }) {
 /* ═══════════════════════════════════════════════════
    MAIN DASHBOARD CONTENT
 ═══════════════════════════════════════════════════ */
-function DashboardContent({ user }: { user: DashboardUser }) {
+function DashboardContent({
+  user,
+  onNav,
+}: {
+  user: DashboardUser;
+  onNav: (id: NavId) => void;
+}) {
   const points = 1240;
   const rank = 38;
 
@@ -1083,7 +1110,7 @@ function DashboardContent({ user }: { user: DashboardUser }) {
       </div>
 
       {/* ── Team Status ── */}
-      <TeamStatusCard hasTeam={true} />
+      <TeamStatusCard hasTeam={true} onNav={onNav} />
 
       {/* ── Stats Row ── */}
       <div
@@ -1146,6 +1173,7 @@ function DashboardContent({ user }: { user: DashboardUser }) {
             desc="Discover skilled students by branch, year, and tech stack."
             label="Search now"
             delay={0}
+            onClick={() => onNav("teammates")}
           />
           <QuickCard
             icon={<Plus size={20} />}
@@ -1153,6 +1181,7 @@ function DashboardContent({ user }: { user: DashboardUser }) {
             desc="Start a new team and invite members for an upcoming hackathon."
             label="Create"
             delay={60}
+            onClick={() => onNav("teams")}
           />
           <QuickCard
             icon={<Trophy size={20} />}
@@ -1160,6 +1189,7 @@ function DashboardContent({ user }: { user: DashboardUser }) {
             desc="Browse open competitions and register before seats fill up."
             label="View all"
             delay={120}
+            onClick={() => onNav("hackathons")}
           />
           <QuickCard
             icon={<ArrowUpRight size={20} />}
@@ -1167,6 +1197,7 @@ function DashboardContent({ user }: { user: DashboardUser }) {
             desc="Track your submitted projects, judging status, and results."
             label="Open"
             delay={180}
+            onClick={() => onNav("hackathons")}
           />
         </div>
       </div>
@@ -1211,6 +1242,7 @@ function DashboardContent({ user }: { user: DashboardUser }) {
               Upcoming Hackathons
             </h2>
             <button
+              onClick={() => onNav("hackathons")}
               style={{
                 background: "none",
                 border: "none",
@@ -1230,24 +1262,28 @@ function DashboardContent({ user }: { user: DashboardUser }) {
               date="Mar 15–16"
               status="open"
               seats={12}
+              onNav={onNav}
             />
             <HackathonRow
               name="KIET Innovate — Spring"
               date="Apr 2"
               status="open"
               seats={30}
+              onNav={onNav}
             />
             <HackathonRow
               name="Ideathon by TechClub"
               date="Apr 18"
               status="soon"
               seats={50}
+              onNav={onNav}
             />
             <HackathonRow
               name="HackFest 2024"
               date="Dec 10"
               status="closed"
               seats={0}
+              onNav={onNav}
             />
           </div>
         </div>
@@ -1385,36 +1421,9 @@ function TopBar({ onToggleSidebar, user }: TopBarProps) {
         </div>
       </div>
       <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-        <button
-          style={{
-            width: 36,
-            height: 36,
-            borderRadius: "50%",
-            border: `1px solid ${B.border}`,
-            background: B.card,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            cursor: "pointer",
-            color: B.muted,
-            position: "relative",
-          }}
-        >
-          <Bell size={16} />
-          <span
-            className="sd-pulse"
-            style={{
-              position: "absolute",
-              top: 7,
-              right: 7,
-              width: 7,
-              height: 7,
-              borderRadius: "50%",
-              background: B.dark,
-              border: "1.5px solid #fff",
-            }}
-          />
-        </button>
+        <NotificationBell
+          userId={String((user as any)._id ?? (user as any).id ?? "")}
+        />
         <Avatar name={user.name} size={34} />
       </div>
     </div>
@@ -1438,14 +1447,68 @@ export default function StudentDashboard({
   };
 
   const VIEW_MAP: Record<NavId, React.ReactNode> = {
-    dashboard: <DashboardContent user={user} />,
+    dashboard: <DashboardContent user={user} onNav={handleNav} />,
     profile: <ProfilePage user={user} />,
     teammates: <TeammatesPage user={user} />,
     teams: <TeamsPage />,
-    hackathons: <SubmissionPage />,
+    hackathons: <HackathonsPage />,
     qa: <QAForumPage />,
     leaderboard: <LeaderboardPage />,
-    analytics: <AdminAnalyticsDashboard />,
+    analytics:
+      user.role === "admin" || user.role === "faculty" ? (
+        <AdminAnalyticsDashboard />
+      ) : (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            minHeight: 320,
+            gap: "1rem",
+            padding: "3rem",
+            textAlign: "center",
+          }}
+        >
+          <div
+            style={{
+              width: 56,
+              height: 56,
+              borderRadius: "1rem",
+              background: "rgba(40,41,44,0.06)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "#96979A",
+            }}
+          >
+            <BarChart2 size={26} />
+          </div>
+          <h2
+            style={{
+              fontSize: "1.05rem",
+              fontWeight: 800,
+              color: "#28292C",
+              fontFamily: "'Inter',sans-serif",
+              letterSpacing: "-0.03em",
+            }}
+          >
+            Admin Only
+          </h2>
+          <p
+            style={{
+              fontSize: "0.83rem",
+              color: "#96979A",
+              fontFamily: "'Inter',sans-serif",
+              maxWidth: 320,
+              lineHeight: 1.6,
+            }}
+          >
+            The Analytics dashboard is accessible to Admin and Faculty roles
+            only.
+          </p>
+        </div>
+      ),
   };
 
   return (

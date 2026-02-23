@@ -1,13 +1,16 @@
-import { Router } from 'express';
-import jwt from 'jsonwebtoken';
-import User from '../models/User';
-import { authenticateToken, AuthRequest } from '../middleware/auth';
-import { authRateLimiter } from '../middleware/rateLimiter';
+import { Router } from "express";
+import jwt from "jsonwebtoken";
+import User from "../models/User";
+import { authenticateToken, AuthRequest } from "../middleware/auth";
+import { authRateLimiter } from "../middleware/rateLimiter";
+import { validateKietEmail } from "../middleware/validateKietEmail";
+import { parseKietEmail } from "../utils/parseKietEmail";
 
 const router = Router();
 
-const JWT_SECRET = process.env.JWT_SECRET || 'dev_jwt_secret_change_me';
-const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || 'dev_refresh_secret_change_me';
+const JWT_SECRET = process.env.JWT_SECRET || "dev_jwt_secret_change_me";
+const JWT_REFRESH_SECRET =
+  process.env.JWT_REFRESH_SECRET || "dev_refresh_secret_change_me";
 
 /**
  * @swagger
@@ -29,7 +32,7 @@ const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || 'dev_refresh_secret
  *               email:
  *                 type: string
  *                 format: email
- *                 description: KIET email address
+ *                 description: KIET institutional email (firstname.YYYYbranchNNNN@kiet.edu)
  *               password:
  *                 type: string
  *                 minLength: 8
@@ -37,12 +40,6 @@ const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || 'dev_refresh_secret
  *               name:
  *                 type: string
  *                 description: User's full name
- *               year:
- *                 type: number
- *                 description: Academic year
- *               branch:
- *                 type: string
- *                 description: Academic branch
  *     responses:
  *       201:
  *         description: User registered successfully
@@ -62,63 +59,80 @@ const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || 'dev_refresh_secret
  *       400:
  *         description: Invalid input or user already exists
  */
-router.post('/register', authRateLimiter, async (req, res) => {
-  try {
-    const { email, password, name, year, branch } = req.body;
+router.post(
+  "/register",
+  validateKietEmail,
+  authRateLimiter,
+  async (req, res) => {
+    try {
+      const { email, password, name } = req.body;
 
-    // Validate required fields
-    if (!email || !password || !name) {
-      return res.status(400).json({ error: 'Email, password, and name are required' });
+      // Validate required fields
+      if (!email || !password || !name) {
+        return res
+          .status(400)
+          .json({ error: "Email, password, and name are required" });
+      }
+
+      // Parse institutional email — extracts library_id, branch, batch years, etc.
+      // validateKietEmail middleware already ran; this call won't throw here.
+      const parsed = parseKietEmail(email as string);
+
+      // Check if user already exists
+      const existingUser = await User.findOne({
+        $or: [
+          { email: email.toLowerCase() },
+          { library_id: parsed.library_id },
+        ],
+      });
+      if (existingUser) {
+        return res
+          .status(400)
+          .json({ error: "User already exists with this email or library ID" });
+      }
+
+      // Create user — branch, library fields auto-populated from email
+      const user = new User({
+        email,
+        password,
+        name,
+        branch: parsed.branch,
+        library_id: parsed.library_id,
+        library_prefix: parsed.library_prefix,
+        library_suffix: parsed.library_suffix,
+        batch_start_year: parsed.batch_start_year,
+        batch_end_year: parsed.batch_end_year,
+      });
+
+      await user.save();
+
+      // Generate tokens
+      const accessToken = jwt.sign({ userId: user._id }, JWT_SECRET, {
+        expiresIn: "15m",
+      });
+
+      const refreshToken = jwt.sign({ userId: user._id }, JWT_REFRESH_SECRET, {
+        expiresIn: "7d",
+      });
+
+      res.status(201).json({
+        message: "User registered successfully",
+        user,
+        accessToken,
+        refreshToken,
+      });
+    } catch (error: any) {
+      console.error("Registration error:", error);
+
+      if (error.name === "ValidationError") {
+        const messages = Object.values(error.errors).map((e: any) => e.message);
+        return res.status(400).json({ error: messages.join(", ") });
+      }
+
+      res.status(500).json({ error: "Registration failed" });
     }
-
-    // Check if user already exists
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      return res.status(400).json({ error: 'User already exists with this email' });
-    }
-
-    // Create user
-    const user = new User({
-      email,
-      password,
-      name,
-      year,
-      branch
-    });
-
-    await user.save();
-
-    // Generate tokens
-    const accessToken = jwt.sign(
-      { userId: user._id },
-      JWT_SECRET,
-      { expiresIn: '15m' }
-    );
-
-    const refreshToken = jwt.sign(
-      { userId: user._id },
-      JWT_REFRESH_SECRET,
-      { expiresIn: '7d' }
-    );
-
-    res.status(201).json({
-      message: 'User registered successfully',
-      user,
-      accessToken,
-      refreshToken
-    });
-
-  } catch (error: any) {
-    console.error('Registration error:', error);
-    
-    if (error.name === 'ValidationError') {
-      const messages = Object.values(error.errors).map((e: any) => e.message);
-      return res.status(400).json({ error: messages.join(', ') });
-    }
-    
-    res.status(500).json({ error: 'Registration failed' });
-  }
-});
+  },
+);
 
 /**
  * @swagger
@@ -147,24 +161,24 @@ router.post('/register', authRateLimiter, async (req, res) => {
  *       401:
  *         description: Invalid credentials
  */
-router.post('/login', authRateLimiter, async (req, res) => {
+router.post("/login", authRateLimiter, async (req, res) => {
   try {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return res.status(400).json({ error: 'Email and password are required' });
+      return res.status(400).json({ error: "Email and password are required" });
     }
 
     // Find user and include password field
-    const user = await User.findOne({ email }).select('+password');
+    const user = await User.findOne({ email }).select("+password");
     if (!user) {
-      return res.status(401).json({ error: 'Invalid credentials' });
+      return res.status(401).json({ error: "Invalid credentials" });
     }
 
     // Check password
     const isValidPassword = await user.comparePassword(password);
     if (!isValidPassword) {
-      return res.status(401).json({ error: 'Invalid credentials' });
+      return res.status(401).json({ error: "Invalid credentials" });
     }
 
     // Update last active
@@ -172,31 +186,26 @@ router.post('/login', authRateLimiter, async (req, res) => {
     await user.save();
 
     // Generate tokens
-    const accessToken = jwt.sign(
-      { userId: user._id },
-      JWT_SECRET,
-      { expiresIn: '15m' }
-    );
+    const accessToken = jwt.sign({ userId: user._id }, JWT_SECRET, {
+      expiresIn: "15m",
+    });
 
-    const refreshToken = jwt.sign(
-      { userId: user._id },
-      JWT_REFRESH_SECRET,
-      { expiresIn: '7d' }
-    );
+    const refreshToken = jwt.sign({ userId: user._id }, JWT_REFRESH_SECRET, {
+      expiresIn: "7d",
+    });
 
     // Remove password from response
     const userResponse = user.toJSON();
 
     res.json({
-      message: 'Login successful',
+      message: "Login successful",
       user: userResponse,
       accessToken,
-      refreshToken
+      refreshToken,
     });
-
   } catch (error) {
-    console.error('Login error:', error);
-    res.status(500).json({ error: 'Login failed' });
+    console.error("Login error:", error);
+    res.status(500).json({ error: "Login failed" });
   }
 });
 
@@ -223,34 +232,33 @@ router.post('/login', authRateLimiter, async (req, res) => {
  *       401:
  *         description: Invalid refresh token
  */
-router.post('/refresh', async (req, res) => {
+router.post("/refresh", async (req, res) => {
   try {
     const { refreshToken } = req.body;
 
     if (!refreshToken) {
-      return res.status(401).json({ error: 'Refresh token required' });
+      return res.status(401).json({ error: "Refresh token required" });
     }
 
-    const decoded = jwt.verify(refreshToken, JWT_REFRESH_SECRET) as { userId: string };
+    const decoded = jwt.verify(refreshToken, JWT_REFRESH_SECRET) as {
+      userId: string;
+    };
     const user = await User.findById(decoded.userId);
 
     if (!user) {
-      return res.status(401).json({ error: 'User not found' });
+      return res.status(401).json({ error: "User not found" });
     }
 
-    const accessToken = jwt.sign(
-      { userId: user._id },
-      JWT_SECRET,
-      { expiresIn: '15m' }
-    );
+    const accessToken = jwt.sign({ userId: user._id }, JWT_SECRET, {
+      expiresIn: "15m",
+    });
 
     res.json({ accessToken });
-
   } catch (error) {
     if (error instanceof jwt.JsonWebTokenError) {
-      return res.status(401).json({ error: 'Invalid refresh token' });
+      return res.status(401).json({ error: "Invalid refresh token" });
     }
-    res.status(500).json({ error: 'Token refresh failed' });
+    res.status(500).json({ error: "Token refresh failed" });
   }
 });
 
@@ -272,12 +280,12 @@ router.post('/refresh', async (req, res) => {
  *       401:
  *         description: Unauthorized
  */
-router.get('/me', authenticateToken, async (req: AuthRequest, res) => {
+router.get("/me", authenticateToken, async (req: AuthRequest, res) => {
   try {
     res.json({ user: req.user });
   } catch (error) {
-    console.error('Get profile error:', error);
-    res.status(500).json({ error: 'Failed to get user profile' });
+    console.error("Get profile error:", error);
+    res.status(500).json({ error: "Failed to get user profile" });
   }
 });
 
