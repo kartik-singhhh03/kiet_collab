@@ -60,7 +60,7 @@ export const getUserById = asyncHandler(async (req: Request, res: Response) => {
 
 /** PATCH /api/users/me  — update own profile */
 export const updateProfile = asyncHandler(async (req: Request, res: Response) => {
-  const allowed = ['name', 'bio', 'department', 'branch', 'year', 'gender', 'skills', 'interests', 'availability_status'];
+  const allowed = ['name', 'bio', 'department', 'branch', 'passout_year', 'gender', 'skills', 'interests', 'availability_status'];
   const updates: Record<string, unknown> = {};
   for (const key of allowed) {
     if (req.body[key] !== undefined) updates[key] = req.body[key];

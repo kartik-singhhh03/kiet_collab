@@ -72,7 +72,8 @@ export interface ProfileUser {
     name: string;
     email: string;
     branch?: string;
-    year?: number;
+    passout_year?: number;
+    academicYear?: number;  // virtual from backend, read-only
     avatar?: string;
 }
 
@@ -505,8 +506,28 @@ const INTEREST_SUGGESTIONS = [
     'Competitive Programming', 'AR/VR', 'DevOps', 'App Development', 'Research',
     'Design', 'Entrepreneurship', 'Hackathons', 'Photography', 'Music',
 ];
-const BRANCH_OPTIONS = ['CSE', 'IT', 'ECE', 'EEE', 'ME', 'CE', 'MBA', 'MCA'];
-const YEAR_OPTIONS = ['1st Year', '2nd Year', '3rd Year', '4th Year'];
+const BRANCH_OPTIONS = [
+    'CSE', 'CS', 'CSIT', 'CSE-AI', 'CSE(AI)', 'CSE-DS', 'CSE(AIML)',
+    'IT', 'ECE', 'EEE', 'ME', 'CE', 'MBA', 'MCA', 'Other',
+];
+
+const _CAL = new Date().getFullYear();
+
+/** Compute academic year (1-4) from passout year. Session starts July. */
+function _academicYear(passoutYear: number): number {
+    const now = new Date();
+    const sessionStart = now.getMonth() + 1 >= 7 ? now.getFullYear() : now.getFullYear() - 1;
+    return 5 - (passoutYear - sessionStart);
+}
+
+const _ORD = ['', '1st', '2nd', '3rd', '4th'] as const;
+
+/** Exactly 4 passout years mapped to academic years */
+const PASSOUT_YEAR_OPTIONS = Array.from({ length: 4 }, (_, i) => {
+    const yr = _CAL + i;
+    const ay = _academicYear(yr);
+    return ay >= 1 && ay <= 4 ? `${yr}  —  ${_ORD[ay]} Year` : String(yr);
+});
 
 /* ═══════════════════════════════════════════════════
    SELECT FIELD
@@ -557,7 +578,12 @@ export default function ProfilePage({ user }: { user: ProfileUser }) {
     });
 
     const [branch, setBranch] = useState(user.branch ?? 'CSE');
-    const [year, setYear] = useState(user.year ? `${user.year}${['', 'st', 'nd', 'rd', 'th'][user.year] ?? 'th'} Year` : '1st Year');
+    // Reconstruct the full label string matching PASSOUT_YEAR_OPTIONS format
+    const [passoutYearLabel, setPassoutYearLabel] = useState(() => {
+        const yr = user.passout_year ?? _CAL + 2;
+        const ay = _academicYear(yr);
+        return ay >= 1 && ay <= 4 ? `${yr}  \u2014  ${_ORD[ay]} Year` : String(yr);
+    });
     const [saving, setSaving] = useState(false);
     const [saved, setSaved] = useState(false);
     const [_avatarFile, setAvatarFile] = useState<File | null>(null);
@@ -620,15 +646,15 @@ export default function ProfilePage({ user }: { user: ProfileUser }) {
                                 </p>
                             </div>
 
-                            {/* Branch + Year */}
+                            {/* Branch + Passout Year */}
                             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
                                 <div>
                                     <p style={{ fontSize: '0.68rem', fontWeight: 700, color: B.muted, letterSpacing: '0.06em', textTransform: 'uppercase', fontFamily: FONT, marginBottom: '0.35rem' }}>Branch</p>
                                     <SelectField value={branch} onChange={v => { setBranch(v); setSaved(false); }} options={BRANCH_OPTIONS} />
                                 </div>
                                 <div>
-                                    <p style={{ fontSize: '0.68rem', fontWeight: 700, color: B.muted, letterSpacing: '0.06em', textTransform: 'uppercase', fontFamily: FONT, marginBottom: '0.35rem' }}>Year</p>
-                                    <SelectField value={year} onChange={v => { setYear(v); setSaved(false); }} options={YEAR_OPTIONS} />
+                                    <p style={{ fontSize: '0.68rem', fontWeight: 700, color: B.muted, letterSpacing: '0.06em', textTransform: 'uppercase', fontFamily: FONT, marginBottom: '0.35rem' }}>Passout Year</p>
+                                    <SelectField value={passoutYearLabel} onChange={v => { setPassoutYearLabel(v); setSaved(false); }} options={PASSOUT_YEAR_OPTIONS} />
                                 </div>
                             </div>
 
