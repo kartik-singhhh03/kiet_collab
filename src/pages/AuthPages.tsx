@@ -274,8 +274,8 @@ interface LoginPageProps {
 
 export interface UserObj {
     id: string; name: string; email: string;
-    avatar?: string; role: 'student' | 'faculty' | 'admin';
-    branch?: string; year?: number;
+    avatar?: string; role: 'student' | 'faculty' | 'judge' | 'admin';
+    branch?: string; passout_year?: number; academicYear?: number;
 }
 
 export function LoginPage({ onSuccess, onGoSignup, onGoLanding }: LoginPageProps) {
@@ -432,13 +432,34 @@ interface SignupPageProps {
     onGoLanding: () => void;
 }
 
-const BRANCHES = ['CSE', 'IT', 'ECE', 'EEE', 'ME', 'CE', 'MBA', 'MCA'];
-const YEARS = [
-    { value: '1', label: '1st Year' },
-    { value: '2', label: '2nd Year' },
-    { value: '3', label: '3rd Year' },
-    { value: '4', label: '4th Year' },
+const BRANCHES = [
+    // CS variants
+    'CSE', 'CS', 'CSIT', 'CSE-AI', 'CSE(AI)', 'CSE-DS', 'CSE(AIML)',
+    // Other engineering
+    'IT', 'ECE', 'EEE', 'ME', 'CE',
+    // PG / management
+    'MBA', 'MCA', 'Other',
 ];
+
+const CURRENT_CAL_YEAR = new Date().getFullYear();
+
+/** Compute academic year (1-4) from passout year. Session starts July. */
+function academicYearFromPassout(passoutYear: number): number {
+    const now = new Date();
+    const sessionStart = now.getMonth() + 1 >= 7 ? now.getFullYear() : now.getFullYear() - 1;
+    return 5 - (passoutYear - sessionStart);
+}
+
+const ORDINAL = ['', '1st', '2nd', '3rd', '4th'] as const;
+
+/** Exactly 4 passout years — one per academic year (1st through 4th) */
+const PASSOUT_YEARS = Array.from({ length: 4 }, (_, i) => {
+    const yr = CURRENT_CAL_YEAR + i;
+    const ay = academicYearFromPassout(yr);
+    const label = ay >= 1 && ay <= 4 ? `${yr}  —  ${ORDINAL[ay]} Year` : String(yr);
+    return { value: String(yr), label };
+});
+
 const GENDERS = [
     { value: 'male', label: 'Male' },
     { value: 'female', label: 'Female' },
@@ -447,13 +468,13 @@ const GENDERS = [
 
 interface SignupForm {
     name: string; email: string; password: string; confirm: string;
-    gender: string; branch: string; year: string;
+    gender: string; branch: string; passout_year: string;
 }
 
 export function SignupPage({ onSuccess, onGoLogin, onGoLanding }: SignupPageProps) {
     const [form, setForm] = useState<SignupForm>({
         name: '', email: '', password: '', confirm: '',
-        gender: '', branch: '', year: '',
+        gender: '', branch: '', passout_year: '',
     });
     const [showPwd, setShowPwd] = useState(false);
     const [showCfm, setShowCfm] = useState(false);
@@ -485,7 +506,7 @@ export function SignupPage({ onSuccess, onGoLogin, onGoLanding }: SignupPageProp
         else if (form.confirm !== form.password) e.confirm = 'Passwords do not match';
         if (!form.gender) e.gender = 'Please select gender';
         if (!form.branch) e.branch = 'Please select branch';
-        if (!form.year) e.year = 'Please select year';
+        if (!form.passout_year) e.passout_year = 'Please select passout year';
         return e;
     };
 
@@ -505,7 +526,7 @@ export function SignupPage({ onSuccess, onGoLogin, onGoLanding }: SignupPageProp
                     password: form.password,
                     gender: form.gender,
                     branch: form.branch,
-                    year: Number(form.year),
+                    passout_year: Number(form.passout_year),
                 }),
             });
             const data = await res.json();
@@ -662,7 +683,7 @@ export function SignupPage({ onSuccess, onGoLogin, onGoLanding }: SignupPageProp
                         />
                     </Field>
 
-                    {/* Branch + Year — 2-col grid */}
+                    {/* Branch + Passout Year — 2-col grid */}
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.9rem' }}>
                         <Field label="Branch" error={errors.branch} required>
                             <SelectInput
@@ -673,13 +694,17 @@ export function SignupPage({ onSuccess, onGoLogin, onGoLanding }: SignupPageProp
                                 error={!!errors.branch}
                             />
                         </Field>
-                        <Field label="Year" error={errors.year} required>
+                        <Field
+                            label="Passout Year"
+                            error={errors.passout_year}
+                            required
+                        >
                             <SelectInput
-                                value={form.year}
-                                onChange={set('year')}
-                                options={YEARS}
-                                placeholder="Year"
-                                error={!!errors.year}
+                                value={form.passout_year}
+                                onChange={set('passout_year')}
+                                options={PASSOUT_YEARS}
+                                placeholder="Graduation year"
+                                error={!!errors.passout_year}
                             />
                         </Field>
                     </div>

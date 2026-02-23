@@ -7,25 +7,25 @@ const seeds = [
     name: 'Aman Kumar',   email: 'aman@kiet.edu',  password: 'password123',
     skills: ['react', 'node', 'typescript'], interests: ['web dev', 'hackathons'],
     role: 'student' as const, availability_status: 'available' as const,
-    branch: 'CSE', year: 3, gender: 'male' as const,
+    branch: 'CSE', passout_year: new Date().getFullYear() + 2, gender: 'male' as const,
   },
   {
     name: 'Priya Sharma', email: 'priya@kiet.edu', password: 'password123',
     skills: ['ui', 'mongodb', 'figma'],      interests: ['design', 'ML'],
     role: 'student' as const, availability_status: 'busy' as const,
-    branch: 'CSE-AI', year: 2, gender: 'female' as const,
+    branch: 'CSE(AIML)', passout_year: new Date().getFullYear() + 3, gender: 'female' as const,
   },
   {
     name: 'Judge User',   email: 'judge@kiet.edu', password: 'password123',
     skills: ['evaluation', 'mentoring'],     interests: ['startups'],
     role: 'judge' as const,   availability_status: 'available' as const,
-    branch: 'Other', year: 1, gender: 'prefer_not_to_say' as const,
+    branch: 'Other', passout_year: new Date().getFullYear(), gender: 'prefer_not_to_say' as const,
   },
   {
     name: 'Admin User',   email: 'admin@kiet.edu', password: 'password123',
     skills: ['admin'],                       interests: [],
     role: 'admin' as const,   availability_status: 'available' as const,
-    branch: 'Other', year: 1, gender: 'prefer_not_to_say' as const,
+    branch: 'Other', passout_year: new Date().getFullYear(), gender: 'prefer_not_to_say' as const,
   },
 ];
 

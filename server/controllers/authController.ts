@@ -27,12 +27,12 @@ function validatePassword(password: string): string | null {
 // ─── POST /api/auth/signup ────────────────────────────────────────────────────
 /**
  * Register a new KIET Collab user.
- * Body: { name, email, password, gender?, branch?, year?, skills?, interests?, role? }
+ * Body: { name, email, password, gender?, branch?, passout_year?, skills?, interests?, role? }
  */
 export const signup = asyncHandler(async (req: Request, res: Response) => {
   const {
     name, email, password,
-    gender, branch, year,
+    gender, branch, passout_year,
     skills, interests,
     department,
     role,
@@ -53,6 +53,22 @@ export const signup = asyncHandler(async (req: Request, res: Response) => {
   const pwError = validatePassword(String(password));
   if (pwError) return sendError(res, pwError);
 
+  // ── Passout year validation ────────────────────────────────────────────────
+  const currentYear = new Date().getFullYear();
+  const parsedPassoutYear = passout_year ? parseInt(String(passout_year), 10) : currentYear + 1;
+  if (
+    isNaN(parsedPassoutYear) ||
+    parsedPassoutYear < currentYear - 10 ||
+    parsedPassoutYear > currentYear + 10
+  ) {
+    return sendError(
+      res,
+      `passout_year must be a valid year (e.g. ${
+        currentYear + 1
+      } for a student graduating next year)`
+    );
+  }
+
   // ── Duplicate check ────────────────────────────────────────────────────────
   const existing = await User.findOne({ email: normalizedEmail });
   if (existing) {
@@ -67,10 +83,10 @@ export const signup = asyncHandler(async (req: Request, res: Response) => {
     name:       String(name).trim(),
     email:      normalizedEmail,
     password,
-    gender:     gender     ?? 'prefer_not_to_say',
-    branch:     branch     ?? '',
-    year:       year       ?? 1,
-    department: department ?? '',
+    gender:       gender     ?? 'prefer_not_to_say',
+    branch:       branch     ?? '',
+    passout_year: parsedPassoutYear,
+    department:   department ?? '',
     skills:     Array.isArray(skills)    ? skills    : [],
     interests:  Array.isArray(interests) ? interests : [],
     role:       safeRole,
