@@ -2,8 +2,9 @@ import { Router } from 'express';
 import {
   listUsers,
   searchUsers,
+  getMe,
+  updateMe,
   getUserById,
-  updateProfile,
   deleteUser,
 } from '../controllers/userController.js';
 import { protect } from '../middleware/auth.js';
@@ -15,10 +16,20 @@ const router = Router();
 // All user routes require authentication
 router.use(protect);
 
-router.get ('/',          roleGuard('admin'), listUsers);
-router.get ('/search',    searchUsers);
-router.get ('/:id',       getUserById);
-router.patch('/me',       uploadAvatar.single('avatar'), updateProfile);
-router.delete('/:id',     roleGuard('admin'), deleteUser);
+// ── Admin list ────────────────────────────────────────────────────────────────
+router.get('/',         roleGuard('admin'), listUsers);
+
+// ── Search / discovery  (no :id conflict) ────────────────────────────────────
+router.get('/search',   searchUsers);
+
+// ── Own profile — /me must come BEFORE /:id ──────────────────────────────────
+router.get ('/me',      getMe);
+router.put ('/me',      uploadAvatar.single('avatar'), updateMe);
+
+// ── Public user profile by ID ─────────────────────────────────────────────────
+router.get('/:id',      getUserById);
+
+// ── Admin delete ──────────────────────────────────────────────────────────────
+router.delete('/:id',   roleGuard('admin'), deleteUser);
 
 export default router;
