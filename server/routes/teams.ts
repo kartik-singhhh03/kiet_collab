@@ -1,24 +1,27 @@
 import { Router } from 'express';
 import {
-  listTeams,
-  getTeam,
   createTeam,
-  updateTeam,
   joinTeam,
-  leaveTeam,
+  removeMember,
+  getTeam,
+  getMyTeams,
 } from '../controllers/teamController.js';
 import { protect } from '../middleware/auth.js';
 
 const router = Router();
 
-router.get ('/',          listTeams);
-router.get ('/:id',       getTeam);
-
-// Authenticated routes
+// All team routes require authentication
 router.use(protect);
-router.post('/',          createTeam);
-router.patch('/:id',      updateTeam);
-router.post ('/:id/join', joinTeam);
-router.delete('/:id/leave', leaveTeam);
+
+// ─── Write ────────────────────────────────────────────────────────────────────
+router.post  ('/create',                 createTeam);
+router.post  ('/join/:teamId',           joinTeam);
+router.delete('/remove/:teamId/:userId', removeMember);
+
+// ─── Read  ────────────────────────────────────────────────────────────────────
+// /user/my-teams MUST be before /:teamId — prevents Express treating
+// the literal string "my-teams" as a MongoDB ObjectId.
+router.get('/user/my-teams', getMyTeams);
+router.get('/:teamId',       getTeam);
 
 export default router;
