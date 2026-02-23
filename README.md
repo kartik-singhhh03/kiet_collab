@@ -2,7 +2,7 @@
 
 A modern, production-ready collaboration platform built specifically for KIET Group of Institutions students.
 
-## 🚀 Features
+## Features
 
 - **Authentication**: Secure JWT-based auth with @kiet.edu email restriction
 - **Modern UI**: Notion-inspired design with glassmorphism and dark/light themes
@@ -13,7 +13,7 @@ A modern, production-ready collaboration platform built specifically for KIET Gr
 - **Q&A Forum**: Knowledge sharing platform
 - **Admin Dashboard**: Role-based access control
 
-## 🏗️ Architecture
+##  Architecture
 
 ### Frontend
 - **React 18** with TypeScript
@@ -30,14 +30,14 @@ A modern, production-ready collaboration platform built specifically for KIET Gr
 - **Socket.IO** for real-time features
 - **Swagger/OpenAPI** for API documentation
 
-## 📋 Prerequisites
+##  Prerequisites
 
 - Node.js 18+ 
 - MongoDB 5+
 - Redis 6+
 - Git
 
-## 🔧 Installation & Setup
+##  Installation & Setup
 
 ### 1. Clone the Repository
 ```bash
@@ -83,13 +83,13 @@ cd frontend
 npm run dev
 ```
 
-## 📚 API Documentation
+##  API Documentation
 
 Once the backend is running, visit:
 - API Docs: http://localhost:3000/api/docs
 - Health Check: http://localhost:3000/health
 
-## 🧪 Testing
+##  Testing
 
 ### Backend Tests
 ```bash
@@ -103,7 +103,7 @@ npm run test:watch
 npm run test:e2e
 ```
 
-## 🚀 Deployment
+##  Deployment
 
 ### Docker Build
 ```bash
@@ -122,14 +122,14 @@ docker build -t kiet-collab-frontend .
 - Configure proper CORS origins
 - Set up monitoring and logging
 
-## 📊 Monitoring
+##  Monitoring
 
 - **Health Check**: `/health` endpoint
 - **Metrics**: Prometheus-compatible metrics (planned)
 - **Logging**: Structured logging with Winston (planned)
 - **Error Tracking**: Sentry integration (planned)
 
-## 🔒 Security Features
+##  Security Features
 
 - HTTPS enforcement
 - Helmet.js security headers
@@ -139,14 +139,14 @@ docker build -t kiet-collab-frontend .
 - JWT with refresh token rotation
 - Password hashing with bcrypt
 
-## 🎯 Performance Targets
+##  Performance Targets
 
 - p95 read latency < 200ms
 - Chat p99 latency < 1s
 - 99.9% availability
 - Support for 500+ concurrent users
 
-## 🌟 Contributing
+##  Contributing
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
@@ -154,15 +154,15 @@ docker build -t kiet-collab-frontend .
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## 📝 License
+##  License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 👥 Team
+## Team
 
 Built with ❤️ by the KIET Development Team
 
-## 🚧 Roadmap
+##  Roadmap
 
 ### Sprint 1 (Weeks 1-2) ✅
 - [x] Project setup and architecture
@@ -189,6 +189,3 @@ Built with ❤️ by the KIET Development Team
 - Email verification system pending
 - Advanced search functionality pending
 
-## 📞 Support
-
-For support, email dev@kiet.edu or create an issue in the repository.
